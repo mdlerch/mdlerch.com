@@ -9,14 +9,14 @@ SITEURL = 'http://www.michaellerchonline.com'
 TIMEZONE = 'US/Mountain'
 DEFAULT_LANG = 'en'
 
-RELATIVE_URLS = False
-# RELATIVE_URLS = True
+# RELATIVE_URLS = False
+RELATIVE_URLS = True
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 
-THEME = '/home/mike/work/web/pelican-themes/tuxlite_tbs/'
+THEME = './tuxlite_tbs/'
 
 # Blogroll
 LINKS = (('about', '/pages/about.html'),
