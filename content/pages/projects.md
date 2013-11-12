@@ -1,10 +1,9 @@
 Title: Projects
 Date: 2013-11-02 22:06
 Category: misc
-Tags: 
 Slug: projects
 Author: Michael Lerch
-Summary: short summary
+Summary: My projects
 <!-- Status: hidden -->
 
 
@@ -17,6 +16,8 @@ Summary: short summary
 
     > A study of song birds in the Elkhorn Mountains of Montana and how their
     > presence has changed during the mountain pine beetle epidemic.
+
+### Software
 
 - [mc-stan.vim]({filename}./projects/mc-stan.md)
 
