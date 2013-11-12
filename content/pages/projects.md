@@ -19,11 +19,13 @@ Summary: My projects
 
 ### Software
 
-- [mc-stan.vim]({filename}./projects/mc-stan.md)
+<!-- - [mc-stan.vim]({filename}./projects/mc-stan.md) -->
+- [mc-stan.vim](http://www.github.com/mdlerch/mc-stan.vim)
 
     > A vim plugin for [stan](http://www.mc-stan.org) modeling language
 
-- [gnuplot.vim]({filename}./projects/gnuplot-vim.md)
+<!-- - [gnuplot.vim]({filename}./projects/gnuplot-vim.md) -->
+- [gnuplot.vim](http://www.github.com/mdlerch/gnuplot.vim)
 
     > A vim plugin for gnuplot.
 
