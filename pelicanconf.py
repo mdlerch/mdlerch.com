@@ -3,8 +3,8 @@
 from __future__ import unicode_literals
 
 AUTHOR = 'Michael Lerch'
-SITENAME = 'michaellerchonline'
-SITEURL = 'http://www.michaellerchonline.com'
+SITENAME = 'mdlerch'
+SITEURL = 'http://mdlerch.com'
 
 TIMEZONE = 'US/Mountain'
 DEFAULT_LANG = 'en'
@@ -34,6 +34,8 @@ STATIC_PATHS = (['CNAME'])
 TWITTER_USERNAME = "mdlerch"
 
 DEFAULT_PAGINATION = 10
+
+SUMMARY_MAX_LENGTH = 100
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
