@@ -16,7 +16,7 @@ FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 
-THEME = './tuxlite_tbs/'
+THEME = './html5-dopetrope/'
 
 # Blogroll
 LINKS = (('about', '/pages/about.html'),
