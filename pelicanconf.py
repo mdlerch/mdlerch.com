@@ -48,5 +48,9 @@ GOOGLE_ANALYTICS = "UA-54051300-1"
 
 DISQUS_SITENAME = 'mdlerch'
 
+COLOPHON = True
+COLOPHON_TITLE = ""
+COLOPHON_CONTENT = "<br/>"
+
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
