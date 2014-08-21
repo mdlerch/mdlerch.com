@@ -37,5 +37,7 @@ DEFAULT_PAGINATION = 10
 
 SUMMARY_MAX_LENGTH = 100
 
+GOOGLE_ANALYTICS = "UA-54051300-1"
+
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
