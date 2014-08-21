@@ -1,5 +1,6 @@
 Title: Increment or decrement visual selection in vim
 Tags: vim
+Status: Draft
 
 vim can increment and decrement digits under the cursor with the `<C-A>`
 `<C-X>` bindings, respectively.  Go try it out and then come back.
