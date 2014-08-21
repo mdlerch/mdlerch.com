@@ -6,6 +6,10 @@ AUTHOR = 'Michael Lerch'
 SITENAME = 'mdlerch'
 SITEURL = 'http://mdlerch.com'
 
+DISPLAY_PAGES_ON_MENU = True
+USE_FOLDER_AS_CATEGORY = True
+DEFAULT_PAGINATION = 8
+
 TIMEZONE = 'US/Mountain'
 DEFAULT_LANG = 'en'
 DEFAULT_DATE = 'fs'
@@ -14,11 +18,14 @@ DEFAULT_DATE_FORMAT = "%d %B %Y"
 # RELATIVE_URLS = False
 RELATIVE_URLS = True
 # Feed generation is usually not desired when developing
+FEED_DOMAIN = SITEURL
 FEED_ALL_ATOM = None
+FEED_ATOM = 'feeds/all.atom.xml'
+FEED_RSS = 'feeds/all.rss.xml'
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 
-THEME = './built-texts/'
+THEME = "./built-texts/"
 
 # Blogroll
 # LINKS = (('about', '/pages/about.html'),
@@ -35,11 +42,11 @@ STATIC_PATHS = (['CNAME'])
 
 TWITTER_USERNAME = "mdlerch"
 
-DEFAULT_PAGINATION = 10
-
 SUMMARY_MAX_LENGTH = 50
 
 GOOGLE_ANALYTICS = "UA-54051300-1"
+
+DISQUS_SITENAME = 'mdlerch'
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
