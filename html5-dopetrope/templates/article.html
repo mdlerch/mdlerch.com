@@ -10,7 +10,9 @@
 							<!-- Content -->
 								<article class="box is-post">
 									<a href="#" class="image image-full"><img src="{{ article.picture }}"/></a>
-									{{ article.content }}
+                                    <h3> {{article.title}} </h3>
+                                    <h5> {{ article.date | strftime('%d %B %Y') }} </h5>
+                                    {{ article.content }}
 								</article>
 						</div>
 					</div>

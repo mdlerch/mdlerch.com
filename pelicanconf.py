@@ -9,6 +9,7 @@ SITEURL = 'http://mdlerch.com'
 TIMEZONE = 'US/Mountain'
 DEFAULT_LANG = 'en'
 DEFAULT_DATE = 'fs'
+DEFAULT_DATE_FORMAT = "%d %B %Y"
 
 # RELATIVE_URLS = False
 RELATIVE_URLS = True
@@ -17,11 +18,11 @@ FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 
-THEME = './html5-dopetrope/'
+THEME = './built-texts/'
 
 # Blogroll
-LINKS = (('about', '/pages/about.html'),
-		('projects', '/pages/projects.html'))
+# LINKS = (('about', '/pages/about.html'),
+		# ('projects', '/pages/projects.html'))
 		 # ('My edu site', "http://www.math.montana.edu/~lerch"),
 		 # ('My github', "https://www.github.com/mdlerch"),)
 
