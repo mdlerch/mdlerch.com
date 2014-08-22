@@ -2,7 +2,7 @@ Title: About
 
 Hey there, I'm Michael Lerch in Bozeman, Montana, USA.  I am a Bayesian
 statistician.  A big fan of Dennis Lindley's pop book _Understanding
-Uncertainty_.  I spend way to much time tweaking my vim config files.  I use R
+Uncertainty_.  I spend way too much time tweaking my vim config files.  I use R
 to do almost everything.  Except plotting.  I'll use R for quickly making
 plots, but when I want to make something nice I use gnuplot.  I also enjoy
 hiking, biking, skiing, hammocking, and the outdoors in general.  I have a
