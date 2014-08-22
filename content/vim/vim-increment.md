@@ -1,6 +1,5 @@
 Title: Increment or decrement visual selection in vim
 Tags: vim
-Status: Draft
 
 vim can increment and decrement digits under the cursor with the `<C-A>`
 `<C-X>` bindings, respectively.  Go try it out and then come back.
@@ -65,5 +64,5 @@ So here's our final mapping:
     :::vim
     vnoremap <C-a> :s/\%V-\=\d+/\=submatch(0)+1/g
 
-To decrement, just subtract 1 instead of adding.  How's this mapping working
-for you?
+To decrement, just subtract 1 instead of adding.  Have you added this mapping
+to your vimrc?  Have you made it better?
