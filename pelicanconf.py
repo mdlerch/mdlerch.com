@@ -36,7 +36,10 @@ THEME = "./built-texts/"
 # Social widget
 SOCIAL = (('github', 'https://www.github.com/mdlerch'),
 		('twitter', 'http://www.twitter.com/mdlerch'),
-		('linkedin', 'http://www.linkedin.com/in/mdlerch'))
+		('linkedin', 'http://www.linkedin.com/in/mdlerch'),
+                ('Google','http://plus.google.com/115559038551588800365?rel=author'))
+
+GPLUSID = "115559038551588800365"
 
 STATIC_PATHS = (['CNAME'])
 

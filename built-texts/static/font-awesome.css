@@ -527,6 +527,12 @@ ul.icons li .icon-large:before {
 .icon-github:before {
   content: "\f09b";
 }
+.icon-Google-sign:before {
+    content: "\f0d4"
+}
+.icon-Google:before {
+    content: "\f0d5"
+}
 .icon-unlock:before {
   content: "\f09c";
 }
