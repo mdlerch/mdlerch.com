@@ -25,6 +25,8 @@ FEED_RSS = 'feeds/all.rss.xml'
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 
+IGNORE_FILES = ['draft*']
+
 THEME = "./built-texts/"
 
 # Blogroll
