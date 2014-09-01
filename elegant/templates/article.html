@@ -77,6 +77,9 @@
         </div>
         <section>
         <div class="span2" style="float:right;font-size:0.9em;">
+            {% if TWITTER_USERNAME %}
+            <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="{{TWITTER_USERNAME}}">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+            {% endif %}
             {% if article.date %} 
             <h4>Published</h4>
             {% set day = article.date.strftime('%d')|int %}
