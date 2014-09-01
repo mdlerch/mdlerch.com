@@ -27,7 +27,7 @@ TRANSLATION_FEED_ATOM = None
 
 IGNORE_FILES = ['draft*']
 
-THEME = "./built-texts/"
+THEME = "./elegant/"
 
 # Blogroll
 # LINKS = (('about', '/pages/about.html'),
