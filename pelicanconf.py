@@ -29,6 +29,8 @@ IGNORE_FILES = ['draft*']
 
 THEME = "./elegant/"
 
+ELEGANT_SEARCH = False
+
 # Blogroll
 # LINKS = (('about', '/pages/about.html'),
 		# ('projects', '/pages/projects.html'))
