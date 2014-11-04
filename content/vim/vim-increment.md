@@ -9,7 +9,7 @@ Now that you are back, let's extend this functionality to visual
 selections.  First let's learn a command you can find in `:help submatch`.
 
     :::vim
-    :s/\d+/\=submatch(0)+1/
+    :s/\d\+/\=submatch(0)+1/
 
 This is a type of substitution called sub-replace-expression.  A normal
 substitution looks like `:s/{pattern}/{string}/` and replaces `{pattern}`
@@ -27,7 +27,7 @@ line.  We can make this operate on every `\d+` on a line with the `g` flag for
 `:s`
 
     :::vim
-    :s/\d+/\=submatch(0)+1/g
+    :s/\d\+/\=submatch(0)+1/g
 
 Go ahead and give that a try.
 
@@ -35,7 +35,7 @@ It feels like we are close now.  This won't work quite right, but at this
 point you might be tempted to add this mapping to your vimrc
 
     :::vim
-    vnoremap <C-a> :s/\d+/\=submatch(0)+1/g
+    vnoremap <C-a> :s/\d\+/\=submatch(0)+1/g
 
 What we _want_ this to do is to increment all numbers in a visual selection.
 It does do that, but it does something else as well.  Can you figure out
@@ -49,7 +49,7 @@ something to the `{pattern}`.  We want to match not just digits but digits
 that are in the visual selection.  We can do that with `\%V`
 
     :::vim
-    vnoremap <C-a> :s/\%V\d+/\=submatch(0)+1/g
+    vnoremap <C-a> :s/\%V\d\+/\=submatch(0)+1/g
 
 Now we are getting pretty close.  There's one problem here depending on the
 exact behavior that you want.  What about negative values?  Do you want -6 to
@@ -63,7 +63,7 @@ evaluate an expression.
 So here's our final mapping:
 
     :::vim
-    vnoremap <C-a> :s/\%V-\=\d+/\=submatch(0)+1/g
+    vnoremap <C-a> :s/\%V-\=\d\+/\=submatch(0)+1/g
 
 To decrement, just subtract 1 instead of adding.  Have you added this mapping
 to your vimrc?  Have you made it better?
