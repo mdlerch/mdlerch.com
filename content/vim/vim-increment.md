@@ -42,7 +42,7 @@ It does do that, but it does something else as well.  Can you figure out
 what's going wrong?
 
 The problem is that the way substitute works on visual selections (ie
-`:'<,'>s` is to operate on the whole line that contains the visual selection
+`:'<,'>s`) is to operate on the whole line that contains the visual selection
 so if you select only some of the numbers on a line, the numbers on the line
 that are not selected will also be incremented.  We can fix this by adding
 something to the `{pattern}`.  We want to match not just digits but digits
