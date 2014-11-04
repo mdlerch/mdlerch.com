@@ -14,16 +14,16 @@ selections.  First let's learn a command you can find in `:help submatch`.
 This is a type of substitution called sub-replace-expression.  A normal
 substitution looks like `:s/{pattern}/{string}/` and replaces `{pattern}`
 with `{string}`.  Here we have the `\=` changes the `{string}` part to an
-expression to be evaluated.  Our pattern in this case is `\d+`.  The `\d`
-matches a digit and the `+` says to match one or more digit so something like
+expression to be evaluated.  Our pattern in this case is `\d\+`.  The `\d`
+matches a digit and the `\+` says to match one or more digit so something like
 `555` is matched once and not 3 times.
 
 So what our sub-replace-expression is going to do is find a number and then
 substitute it with the evaluation of `submatch(0)+1`.  `submatch(0)` simply
-returns the matched text (ie the `\d+`).  The `+1` adds one to it!
+returns the matched text (ie the `\d\+`).  The `+1` adds one to it!
 
-Of course, this only operates on the first occurrence of `\d+` in the current
-line.  We can make this operate on every `\d+` on a line with the `g` flag for
+Of course, this only operates on the first occurrence of `\d\+` in the current
+line.  We can make this operate on every `\d\+` on a line with the `g` flag for
 `:s`
 
     :::vim
@@ -56,7 +56,7 @@ exact behavior that you want.  What about negative values?  Do you want -6 to
 increment to -5 or to increment to -7?  Personally, I want it to increment to
 -5.  If you do, too, we have to add even more to our `{pattern}` to include
 negative signs along with our digit.  What we need to do is add, in front of
-the `\d+` either 0 or 1 `-`'s.  To say 0 or 1, we use `\=` in our pattern.  In
+the `\d\+` either 0 or 1 `-`'s.  To say 0 or 1, we use `\=` in our pattern.  In
 the pattern, `\=` means 0 or 1.  In the replacement string, `\=` means
 evaluate an expression.
 
