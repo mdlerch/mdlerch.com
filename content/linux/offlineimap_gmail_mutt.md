@@ -11,8 +11,8 @@ some time using the gmail web interface for email and then went back to mutt
 and used the built in imap.  However, I've realized that neither of these are
 as good as using offlineimap and mutt together, which I am back to using.  It
 is totally worth the 20 minutes or so to get offlineimap and mutt set up.  This
-post will show my offlineimap and mutt configurations.  I will be assuming
-you've already installed offlineimap and mutt.
+post will show my offlineimap and mutt configurations.  I will assume you've
+already installed offlineimap and mutt.
 
 ### Offlineimap ###
 
