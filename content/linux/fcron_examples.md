@@ -42,4 +42,4 @@ between 9am and 5pm.  A "week" starts on Monday and goes to Sunday so fcron
 will try to do this Monday between 9 and 5.  If your computer is on, it will
 try again on Tuesday.
 
-Lot's more good stuff at [http://fcron.free.fr/doc/en/fcrontab.5.html]
+Lot's more good stuff at [http://fcron.free.fr/doc/en/fcrontab.5.html](http://fcron.free.fr/doc/en/fcrontab.5.html)
