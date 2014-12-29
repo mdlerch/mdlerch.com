@@ -128,6 +128,7 @@ an email.  Let's add that to the augroup and now we have:
         if line('$') > 1
             :%!par w72q
             :%s/^>\+.\+$/\0 /e
+            :%s/\(^>\+\)\@<=\s$//e
             :1
             :let @n="\n\n"
             :exe 'normal "nP'
