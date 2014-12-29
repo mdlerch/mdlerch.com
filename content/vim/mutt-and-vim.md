@@ -100,22 +100,23 @@ add to the `IsReply()` function:
     function IsReply()
         if line('$') > 1
             :%!par w72q
-            :%s/^>.\+$/\0 /e
+            :%s/^>\+.\+$/\0 /e
+            :%s/\(^>\+\)\@<=\s$//e
             :1
             :let @n="\n\n"
             :exe 'normal "nP'
         endif
     endfunction
 
-These two new lines do the following.  First, they let `par` reformat the file.
-The argument w72q sets the width to 72 and supports quotes, meaning it will
-not make a mess of the '>' characters indicating quote level.  The next line
-adds a space to the end of any line that starts with a quote indicator (>)
-except lines that are just the quote character.  I haven't had an issue yet,
-but I do wonder if something can go wrong with adding these spaces and the vim
-format option of 'a' possibly messing things up.  I think most potential
-issues are are avoided by making sure we only add spaces to lines that have
-content (`.\+` vs `.*`).
+These three new lines do the following.  First, they let `par` reformat the
+file.  The argument w72q sets the width to 72 and supports quotes, meaning it
+will not make a mess of the '>' characters indicating quote level.  The next
+line adds a space to the end of any line that starts with a quote indicator (>)
+except lines that are just the quote character.  Next, any line that is just a
+series of quote indicators and then ends with a space and then a new line is
+changed to end with just the quote indicators.  I haven't figured out how to
+combine those two `:%s` substitutions to a single line, though I feel like
+there should be a way.
 
 Ah, now writing email is so much nicer.  Another thing we can do is start in
 insert mode.  Very rarely do I not want to immediately insert text when writing
@@ -126,7 +127,7 @@ an email.  Let's add that to the augroup and now we have:
     function IsReply()
         if line('$') > 1
             :%!par w72q
-            :%s/^>.\+$/\0 /e
+            :%s/^>\+.\+$/\0 /e
             :1
             :let @n="\n\n"
             :exe 'normal "nP'
