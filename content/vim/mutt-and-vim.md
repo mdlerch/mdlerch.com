@@ -84,7 +84,7 @@ looks like this:
 
     augroup mail_filetype
         autocmd!
-        autocmd! VimEnter * :call IsReply()
+        autocmd! VimEnter /tmp/mutt* :call IsReply()
     augroup END
 
     setl tw=72
