@@ -137,8 +137,8 @@ an email.  Let's add that to the augroup and now we have:
 
     augroup mail_filetype
         autocmd!
-        autocmd VimEnter * :call IsReply()
-        autocmd VimEnter * :exe 'startinsert'
+        autocmd VimEnter /tmp/mutt* :call IsReply()
+        autocmd VimEnter /tmp/mutt* :exe 'startinsert'
     augroup END
 
     setl tw=72
