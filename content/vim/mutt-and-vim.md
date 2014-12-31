@@ -60,14 +60,14 @@ this and then call it in an autocmd.  Here's the function:
     function IsReply()
         if line('$') > 1
             :1
-            :let @n="\n\n"
-            :exe 'normal "nP'
+            :put! =\"\n\n\"
+            :1
         endif
     endfunction
 
 What this does is checks the line number of the last line, if it is greater
-than 1 (ie there already is content) it goes to the first line, stores two
-returns in the "n" register, and then pastes those returns.
+than 1 (ie there already is content) it goes to the first line and pastes two
+returns and then returns to the first line.
 
 Now, we call that function in an autocmd and our ftplugin/mail.vim file now
 looks like this:
@@ -77,8 +77,8 @@ looks like this:
     function IsReply()
         if line('$') > 1
             :1
-            :let @n="\n\n"
-            :exe 'normal "nP'
+            :put! =\"\n\n\"
+            :1
         endif
     endfunction
 
@@ -103,8 +103,8 @@ add to the `IsReply()` function:
             :%s/^>\+.\+$/\0 /e
             :%s/\(^>\+\)\@<=\s$//e
             :1
-            :let @n="\n\n"
-            :exe 'normal "nP'
+            :put! =\"\n\n\"
+            :1
         endif
     endfunction
 
@@ -130,8 +130,8 @@ an email.  Let's add that to the augroup and now we have:
             :%s/^>\+.\+$/\0 /e
             :%s/\(^>\+\)\@<=\s$//e
             :1
-            :let @n="\n\n"
-            :exe 'normal "nP'
+            :put! =\"\n\n\"
+            :1
         endif
     endfunction
 
