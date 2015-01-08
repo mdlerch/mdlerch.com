@@ -117,7 +117,7 @@ except lines that are just the quote character.  Next, any line that is just a
 series of quote indicators and then ends with a space and then a new line is
 changed to end with just the quote indicators.  I feel like this substitution
 shouldn't be necessary, but maybe my first substitution is not quite right.
-Lastly, I remove the trailing whitespace of on any line that precedes a line
+Lastly, I remove the trailing whitespace on any line that precedes a line
 that contains only the '>' characters.
 
 Ah, now writing email is so much nicer.  Another thing we can do is start in
