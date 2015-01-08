@@ -102,21 +102,23 @@ add to the `IsReply()` function:
             :%!par w72q
             :%s/^>\+.\+$/\0 /e
             :%s/\(^>\+\)\@<=\s$//e
+            :%s/\s\+\(\n>\+$\)\@=//e
             :1
             :put! =\"\n\n\"
             :1
         endif
     endfunction
 
-These three new lines do the following.  First, they let `par` reformat the
+These four new lines do the following.  First, they let `par` reformat the
 file.  The argument w72q sets the width to 72 and supports quotes, meaning it
 will not make a mess of the '>' characters indicating quote level.  The next
 line adds a space to the end of any line that starts with a quote indicator (>)
 except lines that are just the quote character.  Next, any line that is just a
 series of quote indicators and then ends with a space and then a new line is
-changed to end with just the quote indicators.  I haven't figured out how to
-combine those two `:%s` substitutions to a single line, though I feel like
-there should be a way.
+changed to end with just the quote indicators.  I feel like this substitution
+shouldn't be necessary, but maybe my first substitution is not quite right.
+Lastly, I remove the trailing whitespace of on any line that precedes a line
+that contains only the '>' characters.
 
 Ah, now writing email is so much nicer.  Another thing we can do is start in
 insert mode.  Very rarely do I not want to immediately insert text when writing
@@ -129,6 +131,7 @@ an email.  Let's add that to the augroup and now we have:
             :%!par w72q
             :%s/^>\+.\+$/\0 /e
             :%s/\(^>\+\)\@<=\s$//e
+            :%s/\s\+\(\n>\+$\)\@=//e
             :1
             :put! =\"\n\n\"
             :1
