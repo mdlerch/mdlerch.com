@@ -101,8 +101,8 @@ add to the `IsReply()` function:
         if line('$') > 1
             :%!par w72q
             :%s/^>\+.\+$/\0 /e
-            :%s/\(^>\+\)\@<=\s$//e
-            :%s/\s\+\(\n>\+$\)\@=//e
+            :%s/^>\+\zs\s$//e
+            :%s/\s\+\ze\n>\+$//e
             :1
             :put! =\"\n\n\"
             :1
@@ -130,8 +130,8 @@ an email.  Let's add that to the augroup and now we have:
         if line('$') > 1
             :%!par w72q
             :%s/^>\+.\+$/\0 /e
-            :%s/\(^>\+\)\@<=\s$//e
-            :%s/\s\+\(\n>\+$\)\@=//e
+            :%s/^>\+\zs\s$//e
+            :%s/\s\+\ze\n>\+$//e
             :1
             :put! =\"\n\n\"
             :1
