@@ -1,0 +1,51 @@
+Status: draft
+
+```{r data}
+data(HairEyeColor)
+color.table <- HairEyeColor[ , , 1]
+color.mat <- as.matrix(color.table)[ , -4]
+
+P <- color.mat / sum(color.mat)
+
+P %*% cbind(rep(1, ncol(color.mat)))
+
+Dr <- apply(P, 1, sum)
+R <- solve(diag(Dr)) %*% P
+
+Dc <- apply(P, 2, sum)
+C <- P %*% solve(diag(Dc))
+
+cst <- chisq.test(color.mat)
+
+n <- sum(color.mat)
+
+xs <- 0
+for (i in 1:nrow(color.mat))
+{
+    xs <- xs + n * Dr[i] * t(R[i, ] - Dc) %*% solve(diag(Dc)) %*% (R[i, ] - Dc)
+}
+
+mm <- diag(1/Dr) %*% (P - cbind(Dr) %*% Dc) %*% diag(1/Dc) %*% t(P - cbind(Dr) %*% Dc)
+n * sum(diag(mm))
+
+Z <- diag(1/sqrt(Dr)) %*% (P - cbind(Dr) %*% Dc) %*% diag(1/sqrt(Dc))
+Z
+cst$resid / sqrt(n)
+udv <- svd(Z)
+
+Z
+udv$u %*% diag(udv$d) %*% t(udv$v)
+
+A <- diag(sqrt(Dr)) %*% udv$u
+B <- diag(sqrt(Dc)) %*% udv$v
+
+P - cbind(Dr) %*% Dc
+A %*% diag(udv$d) %*% t(B)
+
+A %*% diag(udv$d)
+
+X <- diag(1/Dr) %*% A %*% diag(udv$d)
+Y <- diag(1/Dc) %*% B %*% diag(udv$d)
+
+R - cbind(rep(1, nrow(color.mat))) %*% Dc
+```
