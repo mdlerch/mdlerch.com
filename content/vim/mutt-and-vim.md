@@ -1,11 +1,10 @@
-Title: Mutt and Vim advanced config
+Title: Emailing (mutt) and vim advanced config
 Tags: vim, mutt, email, linux, unix
 Date: 2014-12-29
 
 Here are some tips you might like for advanced emailing with vim.  I use mutt
 as my email client, but these tips should be mostly applicable to any other
 email client you might use.
-
 
 First, let's talk about format flowed text.  Perhaps you believe so strongly in
 72 character width emails that you tend to enforce this philosophy on everyone
@@ -100,38 +99,45 @@ add to the `IsReply()` function:
     function IsReply()
         if line('$') > 1
             :%!par w72q
-            :%s/^>\+.\+$/\0 /e
-            :%s/^>\+\zs\s$//e
-            :%s/\s\+\ze\n>\+$//e
+            :%s/^.\+\ze\n\(>*$\)\@!/\0 /e
+            :%s/^>*\zs\s\+$//e
             :1
             :put! =\"\n\n\"
             :1
         endif
     endfunction
 
-These four new lines do the following.  First, they let `par` reformat the
-file.  The argument w72q sets the width to 72 and supports quotes, meaning it
-will not make a mess of the '>' characters indicating quote level.  The next
-line adds a space to the end of any line that starts with a quote indicator (>)
-except lines that are just the quote character.  Next, any line that is just a
-series of quote indicators and then ends with a space and then a new line is
-changed to end with just the quote indicators.  I feel like this substitution
-shouldn't be necessary, but maybe my first substitution is not quite right.
-Lastly, I remove the trailing whitespace on any line that precedes a line
-that contains only the '>' characters.
+These three new lines do the following.  First, they let `par` reformat the
+file (make sure you have `par` installed!).  The argument w72q sets the width
+to 72 and supports quotes, meaning it will not make a mess of the '>'
+characters indicating quote level.
 
-Ah, now writing email is so much nicer.  Another thing we can do is start in
-insert mode.  Very rarely do I not want to immediately insert text when writing
-an email.  Let's add that to the augroup and now we have:
+The next line `:%s/^.\+\ze\n\(>*$\)\@!/\0 /e` is a search and replace across
+the whole buffer.  It searches for any lines that contains one or more
+characters followed by a line that is not 0 characters or only '>' characters.
+The actual matched bit is the original line.  The substitution is that same
+line with a space at the end.
+
+The next line `:%s/^>*\zs\s\+$//e` is another search and replace across the
+whole buffer.  I suspect it is possible to combine these two search and
+replaces, but I haven't bothered to figure it out yet.  What this one does it
+looks for any lines that are the '>' followed by whitespace.  Such lines are
+replaced by just the string of '>'.
+
+Thus, blank lines are not swallowed up by flowed text!
+
+Ah, now writing email is so much nicer.  It's not totally perfect, but it's
+pretty good. Another thing we can do is start in insert mode.  Very rarely do I
+not want to immediately insert text when writing an email.  Let's add that to
+the augroup and now we have:
 
     :::vim
     " ftplugin/mail.vim
     function IsReply()
         if line('$') > 1
             :%!par w72q
-            :%s/^>\+.\+$/\0 /e
-            :%s/^>\+\zs\s$//e
-            :%s/\s\+\ze\n>\+$//e
+            :%s/^.\+\ze\n\(>*$\)\@!/\0 /e
+            :%s/^>*\zs\s\+$//e
             :1
             :put! =\"\n\n\"
             :1
