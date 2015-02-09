@@ -17,7 +17,7 @@ First, you probably have or want something like this:
 
     git config --global merge.tool vimdiff
 
-That `vimdiff` in there is _not_ the `vimdiff` executable.  It refers to a
+Note that `vimdiff` in there is _not_ the `vimdiff` executable.  It refers to a
 built-in script.  There's also `vimdiff2` and `vimdiff3`.  (3 is the best by
 the way.)  Those built-in scripts call the `merge_tool_path` executable.  Which
 will be set to `vim` by default.  You can change that with
