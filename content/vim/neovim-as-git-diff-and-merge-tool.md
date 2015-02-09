@@ -1,5 +1,5 @@
 Title: neovim as git diff and merge tool
-Tags: vim neovim
+Tags: vim, neovim, git
 Date: 2015-02-08
 
 You've made the switch.  You are now using neovim for all your text editing,
