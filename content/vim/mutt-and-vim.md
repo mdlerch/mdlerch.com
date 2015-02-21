@@ -2,6 +2,7 @@ Title: Emailing (mutt) and vim advanced config
 Tags: vim, mutt, email, linux, unix
 Date: 2014-12-29
 
+
 Here are some tips you might like for advanced emailing with vim.  I use mutt
 as my email client, but these tips should be mostly applicable to any other
 email client you might use.
