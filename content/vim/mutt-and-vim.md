@@ -129,12 +129,13 @@ Thus, blank lines are not swallowed up by flowed text!
 Ah, now writing email is so much nicer.  It's not totally perfect, but it's
 pretty good. Another thing we can do is start in insert mode.  Very rarely do I
 not want to immediately insert text when writing an email.  Let's add that to
-the augroup and now we have:
+the augroup.  Also, before anything else, get rid of old signatures.
 
     :::vim
     " ftplugin/mail.vim
     function IsReply()
         if line('$') > 1
+            :g/^>\s\=--\s\=$/,$ delete
             :%!par w72q
             :%s/^.\+\ze\n\(>*$\)\@!/\0 /e
             :%s/^>*\zs\s\+$//e
