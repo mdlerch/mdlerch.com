@@ -1,0 +1,64 @@
+Title: Writing tests for R packages without testthat and RUnit
+Tags: R
+Date: 2015-05-31
+
+As a beginner R package author who wanted to include tests in his package, I turned to Google.
+If you do the same, you will find multiple tutorials for the `testthat` package and maybe even a few for the `RUnit` package.
+If you look very closely, you will notice there is also a  `testit` package.
+If you are reading this, that probably means you, like me, found `testthat` annoying and `RUnit` hard to decipher.
+So, why are these packages so popular?
+It's a positive feedback loop.
+`testthat` will be popular by default since it was written by Hadley Wickham.
+Quickly, `testthat` comes to dominate search results which makes new users think that this is the only method which further encourages future package authors to use `testthat`.
+
+But guess what, you **don't** need to use those packages!
+The `testit` package looks nice and simple.
+If I were going to use a package, I'd go with `testit`, but for this blog, I'd like to show you how to do testing without any specific package.
+It's actually extremely simple.
+Let's do some examples.
+
+For our first example, we just want to make sure some R code will run successfully.
+Perhaps you had an issue in a previous version where some R code crashed or returned an error which you didn't want.
+To perform this test, just create an R file in the `tests/` folder of your package.
+You can name it whatever you want.
+The contents should just be to load your package and then run whatever R code you want:
+
+    :::R
+    library(MyPackage)
+    # Make sure x = 12 works for function MyFunction
+    MyFunction(12)
+
+That's all it takes.
+
+OK.
+Now maybe `MyFunction(12)` ought to return a specific value.
+Well, we can pretty simply just adapt the code to call an error if the right value doesn't come up:
+
+    :::R
+    library(MyPackage)
+    # Make sure x = 12 works for function MyFunction and gives correct output
+    a <- MyFunction(12)
+
+    if (a != 13)
+    {
+        stop("MyFunction(12) doesn't equal 13")
+    }
+
+Great!
+Now what if your function returns a big pile of output or a list and you aren't interested in capturing that output and writing the appropriate `if` statement to check?
+Well, if you are certain that the function is currently working, then just change your test file to something like this:
+
+
+    :::R
+    library(MyPackage)
+    # Make sure x = 12 works for function MyFunction and gives correct output
+    MyFunction(12)
+
+Now create an Rout file: `R CMD BATCH my_test_file.R`.
+This creates the file `my_test_file.Rout`.
+It's probably a good idea to look over that Rout file just to make sure things look as they should.
+Now, rename that Rout file as `my_test_file.Rout.save` and make sure it is in the `tests/` folder.
+To be clear, the base name should be the same as the .R file, and the extension should be .Rout.save.
+Now, when you run your tests, the output of `my_test_file.R` will be compared to the already existing `my_test_file.Rout.save`.
+
+Pretty simple, eh?
