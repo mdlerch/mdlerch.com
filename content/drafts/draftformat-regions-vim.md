@@ -1,6 +1,5 @@
 Title: vim different format in different regions
 Tags: vim
-Status: Draft
 
 vim allows you to have different syntax highlighting in different regions (see
 [http://vim.wikia.com/wiki/Different_syntax_highlighting_within_regions_of_a_file]
@@ -22,11 +21,16 @@ will set linewrap or turn it off.  Here's how I do it in vimscript.
 First, I need to define a function to check whether I am in a code or prose
 region.  For Rmd, a code region begins with 
 
+    ~~~~~~~
     ```{r ...
+    ~~~~~~~
 
 (possibly with preceding whitespace) and ends with
 
+
+    ~~~~~~
     ```
+    ~~~~~~
 
 (also possibly with preceding whitespace).  I will check for the most recent
 previous code region beginning and the most recent previous code region ending.
@@ -35,7 +39,7 @@ most recent ending (or if there is no ending) that means I am in a code chunk
 and I should turn off my line wrap.  Otherwise, I should turn it off.  Here's a
 function to do that:
 
-    :::vim
+    ~~~~~~~{vim}
     function InCodeRegion()
         let codestart = search("^[ \t]*```[ ]*r", "bncW")
         let codeend = search("^[ \t]*```$", "bncW")
@@ -45,6 +49,7 @@ function to do that:
             set fo+=t
         endif
     endfunction
+    ~~~~~~~
 
 Now, I just need to call this function whenever I enter insert mode.
 
