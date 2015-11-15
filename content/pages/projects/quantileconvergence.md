@@ -1,4 +1,4 @@
-Title: Quantile Convergence
+Title: Quantile Equivalence Diagnostic for convergence checking in MCMC
 Date: 2013-11-02 21:26
 Category: projects
 Tags: stat, research
@@ -8,8 +8,8 @@ Summary: short summary
 Status: hidden 
 
 
-# The quantile convergence for convergence checking in Markov Chain Monte Carlo
 
+### Background
 ### About
 
 
