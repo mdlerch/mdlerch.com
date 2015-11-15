@@ -74,7 +74,7 @@ And this type of thing for a work project:
 > git remote add git@github-work.com:work/project.git
 ```
 
-In case you are reading to fast, the difference is that we change `git@github.com...` to `git@github-work.com...` for work projects so that the correct ssh key is automatically used.
+In case you are reading too fast, the difference is that we change `git@github.com...` to `git@github-work.com...` for work projects so that the correct ssh key is automatically used.
 
 
 
