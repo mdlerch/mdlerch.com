@@ -21,11 +21,15 @@ Summary: My projects
 
     > An R package to generate named and optimized experimental designs
 
+
 - [Cost-based Variable Selection]({filename}./projects/costvs.md)
 
     > Choosing predictors for regularized linear models while incorporating
     > cost of variable selection.
 
+- [pynchclock](http://mdlerch.github.io/pynchclock)
+
+    > A CLI time-tracking application written in python
 
 <!-- - [mc-stan.vim](http://www.github.com/mdlerch/mc-stan.vim) -->
 
