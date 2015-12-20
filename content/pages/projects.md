@@ -29,7 +29,7 @@ Summary: My projects
 
 - [pynchclock](http://mdlerch.github.io/pynchclock)
 
-    > A CLI time-tracking application written in python
+    > A CLI time-tracking application written in python.
 
 <!-- - [mc-stan.vim](http://www.github.com/mdlerch/mc-stan.vim) -->
 
