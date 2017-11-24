@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = 'Michael Lerch'
 SITENAME = 'mdlerch'
+SITETITLE = 'mdlerch'
 SITEURL = 'http://mdlerch.com'
 
 DISPLAY_PAGES_ON_MENU = True
@@ -16,8 +17,8 @@ DEFAULT_LANG = 'en'
 DEFAULT_DATE = 'fs'
 DEFAULT_DATE_FORMAT = "%d %B %Y"
 
-# ARTICLE_SAVE_AS = '{date:%Y}/{date:%y-%m}-{slug}.html'
-# ARTICLE_URL = '{date:%Y}/{date:%y-%m}-{slug}.html'
+ARTICLE_SAVE_AS = '{date:%Y}/{date:%y-%m}-{slug}.html'
+ARTICLE_URL = '{date:%Y}/{date:%y-%m}-{slug}.html'
 
 # RELATIVE_URLS = False
 RELATIVE_URLS = True
