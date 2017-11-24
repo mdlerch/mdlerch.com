@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>mdlerch - Michael Lerch</title><link href="http://mdlerch.com/" rel="alternate"></link><link href="http://mdlerch.com/feeds/michael-lerch.atom.xml" rel="self"></link><id>http://mdlerch.com/</id><updated>2017-11-24T00:00:00-07:00</updated><entry><title>Goose Creek</title><link href="http://mdlerch.com/2017/11-goose-creek.html" rel="alternate"></link><published>2017-11-19T00:00:00-07:00</published><updated>2017-11-23T00:00:00-07:00</updated><author><name>Michael Lerch</name></author><id>tag:mdlerch.com,2017-11-19:/2017/11-goose-creek.html</id><summary type="html">&lt;p&gt;Early Goose Creek ski&lt;/p&gt;</summary><content type="html">&lt;p&gt;Went to goose creek&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://photos.app.goo.gl/wCRJpeXc0V4WU9rs1"&gt;Photos&lt;/a&gt;&lt;/p&gt;</content><category term="ski"></category><category term="goose creek"></category><category term="backcountry"></category></entry><entry><title>Bracket Creek</title><link href="http://mdlerch.com/2017/11-bracket-creek.html" rel="alternate"></link><published>2017-11-11T00:00:00-07:00</published><updated>2017-11-24T00:00:00-07:00</updated><author><name>Michael Lerch</name></author><id>tag:mdlerch.com,2017-11-11:/2017/11-bracket-creek.html</id><summary type="html">&lt;p&gt;Bracket Creek XC with Soda&lt;/p&gt;</summary><content type="html">&lt;p&gt;Soda and I skied from Bridger Canyon road up to the Bracket Creek trailhead
+parking lot.&lt;/p&gt;</content><category term="cross country"></category><category term="xc"></category><category term="ski"></category><category term="bracket creek"></category></entry><entry><title>Bridger Bowl Ski</title><link href="http://mdlerch.com/2017/11-bridger-bowl-ski.html" rel="alternate"></link><published>2017-11-04T00:00:00-06:00</published><updated>2017-11-23T00:00:00-07:00</updated><author><name>Michael Lerch</name></author><id>tag:mdlerch.com,2017-11-04:/2017/11-bridger-bowl-ski.html</id><summary type="html">&lt;p&gt;Bridger Bowl uphill travel&lt;/p&gt;</summary><content type="html">&lt;p&gt;Went to bridger&lt;/p&gt;</content><category term="bridger bowl"></category><category term="ski"></category></entry><entry><title>Multiple accounts github ssh-keys</title><link href="http://mdlerch.com/2015/11-multiple-accounts-github-ssh-keys.html" rel="alternate"></link><published>2015-11-14T00:00:00-07:00</published><updated>2015-11-14T00:00:00-07:00</updated><author><name>Michael Lerch</name></author><id>tag:mdlerch.com,2015-11-14:/2015/11-multiple-accounts-github-ssh-keys.html</id><summary type="html">&lt;p&gt;If you have multiple github accounts and you would like to push to repositories under each of the accounts on a single computer, then you will probably need to define multiple ssh keys.&lt;/p&gt;
+&lt;p&gt;I will assume that you already have one ssh-key working.
+To get our second account going, the …&lt;/p&gt;</summary><content type="html">&lt;p&gt;If you have multiple github accounts and you would like to push to repositories under each of the accounts on a single computer, then you will probably need to define multiple ssh keys.&lt;/p&gt;
+&lt;p&gt;I will assume that you already have one ssh-key working.
+To get our second account going, the first step is to generate a new ssh key.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt; ssh-keygen -t rsa -C &lt;span class="s2"&gt;&amp;quot;email_for_github_account2@email.com&amp;quot;&lt;/span&gt;
+&lt;span class="c1"&gt;# request for file name (I input id_rsa_work)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now, you should find multiple files in &lt;code&gt;~/.ssh/&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt; ls ~/.ssh
+authorized_keys  id_rsa  id_rsa.pub  id_rsa_workiva  id_rsa_workiva.pub  known_hosts
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now, we ought to make a configuration file so that &lt;code&gt;git&lt;/code&gt; knows when to use each of the keys.
+The best way, that I know how, to do this is to use the different keys based on what host you are connecting to.
+Here's how I set up my config file (&lt;code&gt;~/.ssh/config&lt;/code&gt;)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# ~/.ssh/config
+Host github.com
+    Hostname github.com
+    User git
+    IdentifyFile ~/.ssh/id_rsa
+
+Host github-work.com
+    Hostname github.com
+    User git
+    IdentifyFile ~/.ssh/id_rsa_work
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So now, when I try to ssh to github.com or github-work.com, a different key will be used, but each will connect to the true github.com.  You can call the Host whatever you want, I like this setup.&lt;/p&gt;
+&lt;p&gt;Now let's make sure it works.
+Log into your second account on github and add the newly generated ssh key.&lt;/p&gt;
+&lt;p&gt;Add your new ssh-key to the agent&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt; ssh-add ~/.ssh/id_rsa_work
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And finally, test the connection&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt; ssh -T github.com
+&lt;span class="c1"&gt;# Hi personal-account! You&amp;#39;ve successfully authenticated, but GitHub does not provide shell access.&lt;/span&gt;
+&amp;gt; ssh -T github-work.com
+&lt;span class="c1"&gt;# Hi work-account! You&amp;#39;ve successfully authenticated, but GitHub does not provide shell access.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Beauty.  Our new ssh key works and we can select between the two by specifying a different host name.
+So, in order to put this in practice, what we have to do is specify the custom host name when we define the remote.
+For example do this type of thing for a personal project:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt; git clone git@github.com:personal/project.git
+&lt;span class="c1"&gt;# or&lt;/span&gt;
+&amp;gt; git remote add origin git@github.com:personal/project.git
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And this type of thing for a work project:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt; git clone git@github-work.com:work/project.git
+&lt;span class="c1"&gt;# or&lt;/span&gt;
+&amp;gt; git remote add git@github-work.com:work/project.git
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In case you are reading too fast, the difference is that we change &lt;code&gt;git@github.com...&lt;/code&gt; to &lt;code&gt;git@github-work.com...&lt;/code&gt; for work projects so that the correct ssh key is automatically used.&lt;/p&gt;</content><category term="ssh"></category><category term="linux"></category><category term="github"></category><category term="git"></category><category term="keys"></category><category term="ssh-keys"></category></entry><entry><title>turn off cli alias</title><link href="http://mdlerch.com/2015/07-turn-off-cli-alias.html" rel="alternate"></link><published>2015-07-18T00:00:00-06:00</published><updated>2015-07-18T00:00:00-06:00</updated><author><name>Michael Lerch</name></author><id>tag:mdlerch.com,2015-07-18:/2015/07-turn-off-cli-alias.html</id><summary type="html">&lt;p&gt;tl;dr: &lt;code&gt;\cmd&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;There may be a situation where you have masked a command with a shell alias.
+For example, you may always run a command with certain flags so you might do
+something like&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;ls&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ls --color&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If, for whatever reason, you'd like to run the default &lt;code&gt;ls …&lt;/code&gt;&lt;/p&gt;</summary><content type="html">&lt;p&gt;tl;dr: &lt;code&gt;\cmd&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;There may be a situation where you have masked a command with a shell alias.
+For example, you may always run a command with certain flags so you might do
+something like&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;ls&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ls --color&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If, for whatever reason, you'd like to run the default &lt;code&gt;ls&lt;/code&gt; (or any command
+masked by an alias), just prepend with &lt;code&gt;\&lt;/code&gt;: &lt;code&gt;\ls&lt;/code&gt;&lt;/p&gt;</content><category term="linux"></category><category term="alias"></category><category term="cli"></category></entry><entry><title>UltiSnip snippets missing from completion menu with YouCompleteMe</title><link href="http://mdlerch.com/2015/06-ultisnip-snippets-missing-from-completion-menu-with-youcompleteme.html" rel="alternate"></link><published>2015-06-19T00:00:00-06:00</published><updated>2015-06-19T00:00:00-06:00</updated><author><name>Michael Lerch</name></author><id>tag:mdlerch.com,2015-06-19:/2015/06-ultisnip-snippets-missing-from-completion-menu-with-youcompleteme.html</id><summary type="html">&lt;p&gt;I was having a problem in neovim where my UltiSnips snippets were working, I
+could expand them, however YouCompleteMe was not displaying their availability
+in the pop-up completion menu.  Actually, a couple of the snippets showed up,
+but not most of them.&lt;/p&gt;
+&lt;p&gt;My problem was that UltiSnips was loading with …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I was having a problem in neovim where my UltiSnips snippets were working, I
+could expand them, however YouCompleteMe was not displaying their availability
+in the pop-up completion menu.  Actually, a couple of the snippets showed up,
+but not most of them.&lt;/p&gt;
+&lt;p&gt;My problem was that UltiSnips was loading with Python 3 and YouCompleteMe is
+on Python 2.  To fix the problem, I simply told UltiSnips to use Python 2:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;g&lt;/span&gt;:UltiSnipsUsePythonVersion&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now, YouCompleteMe populates the completion menu with &lt;em&gt;all&lt;/em&gt; the matching
+snippets.&lt;/p&gt;</content><category term="vim"></category></entry><entry><title>Writing tests for R packages without testthat and RUnit</title><link href="http://mdlerch.com/2015/05-writing-tests-for-r-packages-without-testthat-and-runit.html" rel="alternate"></link><published>2015-05-31T00:00:00-06:00</published><updated>2015-05-31T00:00:00-06:00</updated><author><name>Michael Lerch</name></author><id>tag:mdlerch.com,2015-05-31:/2015/05-writing-tests-for-r-packages-without-testthat-and-runit.html</id><summary type="html">&lt;p&gt;As a beginner R package author who wanted to include tests in his package, I turned to Google.
+If you do the same, you will find multiple tutorials for the &lt;code&gt;testthat&lt;/code&gt; package and maybe even a few for the &lt;code&gt;RUnit&lt;/code&gt; package.
+If you look very closely, you will notice there …&lt;/p&gt;</summary><content type="html">&lt;p&gt;As a beginner R package author who wanted to include tests in his package, I turned to Google.
+If you do the same, you will find multiple tutorials for the &lt;code&gt;testthat&lt;/code&gt; package and maybe even a few for the &lt;code&gt;RUnit&lt;/code&gt; package.
+If you look very closely, you will notice there is also a  &lt;code&gt;testit&lt;/code&gt; package.
+If you are reading this, that probably means you, like me, found &lt;code&gt;testthat&lt;/code&gt; annoying and &lt;code&gt;RUnit&lt;/code&gt; hard to decipher.
+So, why are these packages so popular?
+It's a positive feedback loop.
+&lt;code&gt;testthat&lt;/code&gt; will be popular by default since it was written by Hadley Wickham.
+Quickly, &lt;code&gt;testthat&lt;/code&gt; comes to dominate search results which makes new users think that this is the only method which further encourages future package authors to use &lt;code&gt;testthat&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;But guess what, you &lt;strong&gt;don't&lt;/strong&gt; need to use those packages!
+The &lt;code&gt;testit&lt;/code&gt; package looks nice and simple.
+If I were going to use a package, I'd go with &lt;code&gt;testit&lt;/code&gt;, but for this blog, I'd like to show you how to do testing without any specific package.
+It's actually extremely simple.
+Let's do some examples.&lt;/p&gt;
+&lt;p&gt;For our first example, we just want to make sure some R code will run successfully.
+Perhaps you had an issue in a previous version where some R code crashed or returned an error which you didn't want.
+To perform this test, just create an R file in the &lt;code&gt;tests/&lt;/code&gt; folder of your package.
+You can name it whatever you want.
+The contents should just be to load your package and then run whatever R code you want:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;MyPackage&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;# Make sure x = 12 works for function MyFunction&lt;/span&gt;
+MyFunction&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;12&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;That's all it takes.&lt;/p&gt;
+&lt;p&gt;OK.
+Now maybe &lt;code&gt;MyFunction(12)&lt;/code&gt; ought to return a specific value.
+Well, we can pretty simply just adapt the code to call an error if the right value doesn't come up:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;MyPackage&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;# Make sure x = 12 works for function MyFunction and gives correct output&lt;/span&gt;
+a &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; MyFunction&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;12&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="kr"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;a &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="m"&gt;13&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kp"&gt;stop&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;MyFunction(12) doesn&amp;#39;t equal 13&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Great!
+Now what if your function returns a big pile of output or a list and you aren't interested in capturing that output and writing the appropriate &lt;code&gt;if&lt;/code&gt; statement to check?
+Well, if you are certain that the function is currently working, then just change your test file to something like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;MyPackage&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;# Make sure x = 12 works for function MyFunction and gives correct output&lt;/span&gt;
+MyFunction&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;12&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now create an Rout file: &lt;code&gt;R CMD BATCH my_test_file.R&lt;/code&gt;.
+This creates the file &lt;code&gt;my_test_file.Rout&lt;/code&gt;.
+It's probably a good idea to look over that Rout file just to make sure things look as they should.
+Now, rename that Rout file as &lt;code&gt;my_test_file.Rout.save&lt;/code&gt; and make sure it is in the &lt;code&gt;tests/&lt;/code&gt; folder.
+To be clear, the base name should be the same as the .R file, and the extension should be .Rout.save.
+Now, when you run your tests, the output of &lt;code&gt;my_test_file.R&lt;/code&gt; will be compared to the already existing &lt;code&gt;my_test_file.Rout.save&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Pretty simple, eh?&lt;/p&gt;</content><category term="R"></category></entry><entry><title>neovim as git diff and merge tool</title><link href="http://mdlerch.com/2015/02-neovim-as-git-diff-and-merge-tool.html" rel="alternate"></link><published>2015-02-08T00:00:00-07:00</published><updated>2015-02-08T00:00:00-07:00</updated><author><name>Michael Lerch</name></author><id>tag:mdlerch.com,2015-02-08:/2015/02-neovim-as-git-diff-and-merge-tool.html</id><summary type="html">&lt;p&gt;You've made the switch.  You are now using neovim for all your text editing,
+and you've hardly even noticed that you aren't using regular old vim.  Except
+one thing.  Your git difftool and mergetool aren't quite right.  One of two
+things is happening.  Either you are using old vim (which …&lt;/p&gt;</summary><content type="html">&lt;p&gt;You've made the switch.  You are now using neovim for all your text editing,
+and you've hardly even noticed that you aren't using regular old vim.  Except
+one thing.  Your git difftool and mergetool aren't quite right.  One of two
+things is happening.  Either you are using old vim (which is fine, but you
+want to switch &lt;em&gt;completely&lt;/em&gt; to neovim) or things are breaking because you have
+gone so far as to not just install neovim but to also remove vim!&lt;/p&gt;
+&lt;p&gt;So why is this happening?  Your git mergetool is still set to vim even
+though you set your core.editor to nvim.  So, we just tell git to use &lt;code&gt;nvim&lt;/code&gt;
+for your mergetool.&lt;/p&gt;
+&lt;p&gt;First, you probably have or want something like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git config --global merge.tool vimdiff
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Note that &lt;code&gt;vimdiff&lt;/code&gt; in there is &lt;em&gt;not&lt;/em&gt; the &lt;code&gt;vimdiff&lt;/code&gt; executable.  It refers to a
+built-in script.  There's also &lt;code&gt;vimdiff2&lt;/code&gt; and &lt;code&gt;vimdiff3&lt;/code&gt;.  (3 is the best by
+the way.)  Those built-in scripts call the &lt;code&gt;merge_tool_path&lt;/code&gt; executable.  Which
+will be set to &lt;code&gt;vim&lt;/code&gt; by default.  You can change that with&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git config --global mergetool.path nvim
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;All done.  The difftool uses the mergetool by default so that's all you need
+to set!&lt;/p&gt;</content><category term="vim"></category><category term="neovim"></category><category term="git"></category></entry><entry><title>Fixing mutt and goobook</title><link href="http://mdlerch.com/2015/01-fixing-mutt-and-goobook.html" rel="alternate"></link><published>2015-01-27T00:00:00-07:00</published><updated>2015-01-27T00:00:00-07:00</updated><author><name>Michael Lerch</name></author><id>tag:mdlerch.com,2015-01-27:/2015/01-fixing-mutt-and-goobook.html</id><summary type="html">&lt;p&gt;There are a lot of blog posts out there that show how to combine mutt and
+goobook.  However, all of them that I have seen are wrong.  This isn't a long,
+post, I'm not going to tell you &lt;em&gt;about&lt;/em&gt; goobook and mutt, I'm just going to
+tell you the problem …&lt;/p&gt;</summary><content type="html">&lt;p&gt;There are a lot of blog posts out there that show how to combine mutt and
+goobook.  However, all of them that I have seen are wrong.  This isn't a long,
+post, I'm not going to tell you &lt;em&gt;about&lt;/em&gt; goobook and mutt, I'm just going to
+tell you the problem and the &lt;em&gt;correct&lt;/em&gt; usage.  I imagine this also goes for
+other query commands besides goobook.&lt;/p&gt;
+&lt;p&gt;First the problem.  If you query a single word, things work fine.  If you
+query two words, say a first and last name, goobook breaks.  For example, if
+you type "joe smith" and then hit tab (or however you query) the display gets
+messed up and goobook says "unrecognized argument: smith".  So, you change
+your query to just "joe" and then you have to manually wade through all of
+the "joe"'s in you contact list.&lt;/p&gt;
+&lt;p&gt;This is because you probably have this line in your mutt config:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;set query_command=&amp;quot;goobook query &amp;#39;%s&amp;#39;&amp;quot;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Don't feel bad, that line is in lots of blog posts.&lt;/p&gt;
+&lt;p&gt;This is what you should have:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;set query_command=&amp;quot;goobook query %s&amp;quot;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;That is, no quotes around the &lt;code&gt;%s&lt;/code&gt;.  Mutt adds them automatically (see &lt;code&gt;man
+muttrc&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Finally, you can type a first &lt;em&gt;and&lt;/em&gt; last name to query!&lt;/p&gt;</content><category term="mutt"></category></entry><entry><title>Emailing (mutt) and vim advanced config</title><link href="http://mdlerch.com/2014/12-emailing-mutt-and-vim-advanced-config.html" rel="alternate"></link><published>2014-12-29T00:00:00-07:00</published><updated>2014-12-29T00:00:00-07:00</updated><author><name>Michael Lerch</name></author><id>tag:mdlerch.com,2014-12-29:/2014/12-emailing-mutt-and-vim-advanced-config.html</id><summary type="html">&lt;p&gt;Here are some tips you might like for advanced emailing with vim.  I use mutt
+as my email client, but these tips should be mostly applicable to any other
+email client you might use.&lt;/p&gt;
+&lt;p&gt;First, let's talk about format flowed text.  Perhaps you believe so strongly in
+72 character width …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Here are some tips you might like for advanced emailing with vim.  I use mutt
+as my email client, but these tips should be mostly applicable to any other
+email client you might use.&lt;/p&gt;
+&lt;p&gt;First, let's talk about format flowed text.  Perhaps you believe so strongly in
+72 character width emails that you tend to enforce this philosophy on everyone
+you email.  If you are a more reasonable person, you prefer 72 characters for
+writing and in some circumstances reading, but certainly not while reading on a
+phone, for example.  The solution to this is format flow text.&lt;/p&gt;
+&lt;p&gt;Essentially, any line that ends in white space is continued on the next line
+and any line that ends not on white space terminates a paragraph.  Hence,
+email clients that respect format flow treat any newlines preceded by a space
+a soft return and any preceded by a non-space a hard return.&lt;/p&gt;
+&lt;p&gt;To use this in mutt and vim, we first have to turn on format flow in mutt so
+that it puts a flag in the email header.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# muttrc
+set text_flowed
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now, we need to make sure that vim is on board.  I now add the following to
+&lt;code&gt;.vim/ftplugin/mail.vim&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;&amp;quot; ftplugin/mail.vim&lt;/span&gt;
+&lt;span class="k"&gt;setl&lt;/span&gt; &lt;span class="nb"&gt;tw&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="m"&gt;72&lt;/span&gt;
+&lt;span class="k"&gt;setl&lt;/span&gt; &lt;span class="k"&gt;fo&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;aw&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The first line sets the textwidth for the current buffer to be 72 characters.
+The second line turns on formatting options 'a' and 'w'.  The 'a' option is
+not necessary, but it is nice.  'w' denotes that paragraphs are terminated by
+lines that end in non-white space.  'a' automatically reformats a paragraph so
+if you edit the interior of paragraph, vim will automatically apply the 72
+character width across the whole paragraph.  For slightly more, see
+&lt;code&gt;:help fo-table&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Great, we now have format flow text working.  We can write emails and the
+reader no longer has to read jagged edge emails on their phone!  In fact, now
+that the emails are no longer so ugly, we might have email conversations with
+people!  But now we have a new annoyance.  In mutt (at least this is the case
+without setting &lt;code&gt;edit_headers&lt;/code&gt;) what I observe is that on a reply, I am given
+a file to edit where the first line says "On Mon Dec, 29, Someone wrote:".
+That's pretty annoying.  I'd like there to be a blank line between my new email
+and that line.  Sure I can press "O" in vim and open a new line and then make
+sure I hit return twice, but if I'm going to do that every time, it should be
+automatic.&lt;/p&gt;
+&lt;p&gt;So I set up an &lt;code&gt;autocmd&lt;/code&gt; to insert two blank lines at the top of the email if
+the email already contains content.  First, let's write a function that does
+this and then call it in an autocmd.  Here's the function:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;&amp;quot; add two blank lines if already content&lt;/span&gt;
+&lt;span class="k"&gt;function&lt;/span&gt; IsReply&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; line&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;$&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+        :&lt;span class="m"&gt;1&lt;/span&gt;
+        :&lt;span class="k"&gt;put&lt;/span&gt;&lt;span class="p"&gt;!&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt;\&lt;span class="s2"&gt;&amp;quot;\n\n\&amp;quot;&lt;/span&gt;
+        :&lt;span class="m"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;endif&lt;/span&gt;
+&lt;span class="k"&gt;endfunction&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;What this does is checks the line number of the last line, if it is greater
+than 1 (ie there already is content) it goes to the first line and pastes two
+returns and then returns to the first line.&lt;/p&gt;
+&lt;p&gt;Now, we call that function in an autocmd and our ftplugin/mail.vim file now
+looks like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;&amp;quot; ftplugin/mail.vim&lt;/span&gt;
+&lt;span class="k"&gt;function&lt;/span&gt; IsReply&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; line&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;$&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+        :&lt;span class="m"&gt;1&lt;/span&gt;
+        :&lt;span class="k"&gt;put&lt;/span&gt;&lt;span class="p"&gt;!&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt;\&lt;span class="s2"&gt;&amp;quot;\n\n\&amp;quot;&lt;/span&gt;
+        :&lt;span class="m"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;endif&lt;/span&gt;
+&lt;span class="k"&gt;endfunction&lt;/span&gt;
+
+augroup mail_filetype
+    autocmd&lt;span class="p"&gt;!&lt;/span&gt;
+    autocmd&lt;span class="p"&gt;!&lt;/span&gt; &lt;span class="nb"&gt;VimEnter&lt;/span&gt; &lt;span class="sr"&gt;/tmp/&lt;/span&gt;mutt* :&lt;span class="k"&gt;call&lt;/span&gt; IsReply&lt;span class="p"&gt;()&lt;/span&gt;
+augroup END
+
+&lt;span class="k"&gt;setl&lt;/span&gt; &lt;span class="nb"&gt;tw&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="m"&gt;72&lt;/span&gt;
+&lt;span class="k"&gt;setl&lt;/span&gt; &lt;span class="k"&gt;fo&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;aw&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This is pretty nice, but how should we handle the formatting of the quoted text
+from the reply?  Surely, we'd like to apply format flow to that as well.
+Indeed, we can using the external program &lt;code&gt;par&lt;/code&gt; which is a text formatter and
+adding some spaces at the ends of lines.  If you have &lt;code&gt;par&lt;/code&gt; installed, you can
+add to the &lt;code&gt;IsReply()&lt;/code&gt; function:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;function&lt;/span&gt; IsReply&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; line&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;$&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+        :%&lt;span class="p"&gt;!&lt;/span&gt;par w72q
+        :%s&lt;span class="sr"&gt;/^.\+\ze\n\(&amp;gt;*$\)\@!/&lt;/span&gt;\&lt;span class="m"&gt;0&lt;/span&gt; /&lt;span class="k"&gt;e&lt;/span&gt;
+        :%s&lt;span class="sr"&gt;/^&amp;gt;*\zs\s\+$/&lt;/span&gt;/&lt;span class="k"&gt;e&lt;/span&gt;
+        :&lt;span class="m"&gt;1&lt;/span&gt;
+        :&lt;span class="k"&gt;put&lt;/span&gt;&lt;span class="p"&gt;!&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt;\&lt;span class="s2"&gt;&amp;quot;\n\n\&amp;quot;&lt;/span&gt;
+        :&lt;span class="m"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;endif&lt;/span&gt;
+&lt;span class="k"&gt;endfunction&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;These three new lines do the following.  First, they let &lt;code&gt;par&lt;/code&gt; reformat the
+file (make sure you have &lt;code&gt;par&lt;/code&gt; installed!).  The argument w72q sets the width
+to 72 and supports quotes, meaning it will not make a mess of the '&amp;gt;'
+characters indicating quote level.&lt;/p&gt;
+&lt;p&gt;The next line &lt;code&gt;:%s/^.\+\ze\n\(&amp;gt;*$\)\@!/\0 /e&lt;/code&gt; is a search and replace across
+the whole buffer.  It searches for any lines that contains one or more
+characters followed by a line that is not 0 characters or only '&amp;gt;' characters.
+The actual matched bit is the original line.  The substitution is that same
+line with a space at the end.&lt;/p&gt;
+&lt;p&gt;The next line &lt;code&gt;:%s/^&amp;gt;*\zs\s\+$//e&lt;/code&gt; is another search and replace across the
+whole buffer.  I suspect it is possible to combine these two search and
+replaces, but I haven't bothered to figure it out yet.  What this one does it
+looks for any lines that are the '&amp;gt;' followed by whitespace.  Such lines are
+replaced by just the string of '&amp;gt;'.&lt;/p&gt;
+&lt;p&gt;Thus, blank lines are not swallowed up by flowed text!&lt;/p&gt;
+&lt;p&gt;Ah, now writing email is so much nicer.  It's not totally perfect, but it's
+pretty good. Another thing we can do is start in insert mode.  Very rarely do I
+not want to immediately insert text when writing an email.  Let's add that to
+the augroup.  Also, before anything else, get rid of old signatures.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;&amp;quot; ftplugin/mail.vim&lt;/span&gt;
+&lt;span class="k"&gt;function&lt;/span&gt; IsReply&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; line&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;$&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+        :&lt;span class="k"&gt;g&lt;/span&gt;&lt;span class="sr"&gt;/^&amp;gt;\s\=--\s\=$/&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;$ delete
+        :%&lt;span class="p"&gt;!&lt;/span&gt;par w72q
+        :%s&lt;span class="sr"&gt;/^.\+\ze\n\(&amp;gt;*$\)\@!/&lt;/span&gt;\&lt;span class="m"&gt;0&lt;/span&gt; /&lt;span class="k"&gt;e&lt;/span&gt;
+        :%s&lt;span class="sr"&gt;/^&amp;gt;*\zs\s\+$/&lt;/span&gt;/&lt;span class="k"&gt;e&lt;/span&gt;
+        :&lt;span class="m"&gt;1&lt;/span&gt;
+        :&lt;span class="k"&gt;put&lt;/span&gt;&lt;span class="p"&gt;!&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt;\&lt;span class="s2"&gt;&amp;quot;\n\n\&amp;quot;&lt;/span&gt;
+        :&lt;span class="m"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;endif&lt;/span&gt;
+&lt;span class="k"&gt;endfunction&lt;/span&gt;
+
+augroup mail_filetype
+    autocmd&lt;span class="p"&gt;!&lt;/span&gt;
+    autocmd &lt;span class="nb"&gt;VimEnter&lt;/span&gt; &lt;span class="sr"&gt;/tmp/&lt;/span&gt;mutt* :&lt;span class="k"&gt;call&lt;/span&gt; IsReply&lt;span class="p"&gt;()&lt;/span&gt;
+    autocmd &lt;span class="nb"&gt;VimEnter&lt;/span&gt; &lt;span class="sr"&gt;/tmp/&lt;/span&gt;mutt* :exe &lt;span class="s1"&gt;&amp;#39;startinsert&amp;#39;&lt;/span&gt;
+augroup END
+
+&lt;span class="k"&gt;setl&lt;/span&gt; &lt;span class="nb"&gt;tw&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="m"&gt;72&lt;/span&gt;
+&lt;span class="k"&gt;setl&lt;/span&gt; &lt;span class="k"&gt;fo&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;aw&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="vim"></category><category term="mutt"></category><category term="email"></category><category term="linux"></category><category term="unix"></category></entry><entry><title>Tutorial to get cmus rockin'</title><link href="http://mdlerch.com/2014/12-tutorial-to-get-cmus-rockin.html" rel="alternate"></link><published>2014-12-07T00:00:00-07:00</published><updated>2014-12-07T00:00:00-07:00</updated><author><name>Michael Lerch</name></author><id>tag:mdlerch.com,2014-12-07:/2014/12-tutorial-to-get-cmus-rockin.html</id><summary type="html">&lt;p&gt;&lt;code&gt;cmus&lt;/code&gt; is a console based music player.  It's rather feature filled which can
+mean that getting it set up "just right" might require some work.  This post is
+to help you get &lt;code&gt;cmus&lt;/code&gt; set up to rock!  There are a few introductory tutorials
+out there, but they only scratch the …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;code&gt;cmus&lt;/code&gt; is a console based music player.  It's rather feature filled which can
+mean that getting it set up "just right" might require some work.  This post is
+to help you get &lt;code&gt;cmus&lt;/code&gt; set up to rock!  There are a few introductory tutorials
+out there, but they only scratch the surface.  My goal is to skip over the very
+introductory stuff--you've probably already figured that stuff out--and tell
+you &lt;em&gt;my&lt;/em&gt; opinions on how to interact with &lt;code&gt;cmus&lt;/code&gt;.  I am assuming you've found
+the &lt;code&gt;:add&lt;/code&gt; command, you already know how to play music, and are familiar with
+the different views (1-7).&lt;/p&gt;
+&lt;p&gt;Lastly, if you aren't familiar with it, you can set default keybindings and
+commands to be run in a file like &lt;code&gt;~/.config/cmus/rc&lt;/code&gt;:  take a look at the
+FILES part of &lt;code&gt;man cmus&lt;/code&gt;.&lt;/p&gt;
+&lt;h3&gt;Controlling the player&lt;/h3&gt;
+&lt;p&gt;The three main operations you need for a music player are play/pause toggle,
+next track, previous track.  The keybindings for these are &lt;code&gt;c&lt;/code&gt;, &lt;code&gt;b&lt;/code&gt;, and &lt;code&gt;z&lt;/code&gt;,
+respectively.  I can only guess that these are a pneumonic in some language
+that is not English.  Especially &lt;code&gt;b&lt;/code&gt; meaning &lt;em&gt;next&lt;/em&gt; is bizarre for me.
+However, you &lt;em&gt;should not&lt;/em&gt; use these commands anyway.  For these operations, you
+&lt;em&gt;should not&lt;/em&gt; have to browse back to your music player.  You should just hit a
+keybinding wherever you are and your window manager should take care of the
+rest.&lt;/p&gt;
+&lt;p&gt;To do this with &lt;code&gt;cmus&lt;/code&gt;, we use the &lt;code&gt;cmus-remote&lt;/code&gt; which comes with &lt;code&gt;cmus&lt;/code&gt;.  For
+play/pause toggle: &lt;code&gt;cmus-remote -u&lt;/code&gt;.  For next track: &lt;code&gt;cmus-remote -n&lt;/code&gt;.  For
+previous track: &lt;code&gt;cmus-remote -r&lt;/code&gt;.  Note that the previous track command
+performs &lt;em&gt;correctly&lt;/em&gt; without any hacking.  If you near the beginning of the
+track, go back to the previous; if you are past the beginning of the track, go
+back to the start of this track.&lt;/p&gt;
+&lt;p&gt;Set up your window manager to recognize a keybinding for each of the
+&lt;code&gt;cmus-remote&lt;/code&gt; commands and forget about &lt;code&gt;c&lt;/code&gt;, &lt;code&gt;b&lt;/code&gt;, and &lt;code&gt;z&lt;/code&gt;.&lt;/p&gt;
+&lt;h3&gt;The playback Modes&lt;/h3&gt;
+&lt;p&gt;Now that we have the basics down, we need to understand the way &lt;code&gt;cmus&lt;/code&gt; thinks
+about your music.  There are two sources, or playback Modes: the &lt;em&gt;library&lt;/em&gt; and
+the &lt;em&gt;playlist&lt;/em&gt;.  This might sound backwards, but this is how you should think
+of these sources: the &lt;em&gt;library&lt;/em&gt; is a dynamic subset of all of your tracks; the
+&lt;em&gt;playlist&lt;/em&gt; is a fixed list of tracks (or files) to be played.  You might like
+to think about &lt;em&gt;library&lt;/em&gt; or &lt;em&gt;playlist&lt;/em&gt; as the Major Mode.  The default
+keybinding in &lt;code&gt;cmus&lt;/code&gt; to switch between these Modes is &lt;code&gt;M&lt;/code&gt;.  I'll keep using the
+capital M in Mode in reference to the default keybinding.&lt;/p&gt;
+&lt;p&gt;You can read about playlists in &lt;code&gt;man cmus&lt;/code&gt;.  Here's a couple quick tips:
+if you already have playlists saved to files, you can add the contents of the
+playlist file with the &lt;code&gt;win-add-p&lt;/code&gt;.  The default key for this is &lt;code&gt;y&lt;/code&gt;.  I
+prefer &lt;code&gt;p&lt;/code&gt; for playlist so I have&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;unbind -f p common
+unbind -f p library win-add-p
+unbind -f p browser win-add-p
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;in my &lt;code&gt;rc&lt;/code&gt; file.  If you have a single folder where all the playlists live,
+you might want to add this to your &lt;code&gt;rc&lt;/code&gt; file:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cd /path/to/playlists/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This way you have access to the playlists right away in the browser (5) view.&lt;/p&gt;
+&lt;p&gt;Now, let's talk about &lt;em&gt;library&lt;/em&gt; Mode.  Library Mode has 3 minor modes.  I'm
+using a lower case &lt;em&gt;m&lt;/em&gt; here since the default keybinding to switch between the
+minor modes is &lt;code&gt;m&lt;/code&gt;.  The minor modes are &lt;em&gt;all&lt;/em&gt;, &lt;em&gt;artist&lt;/em&gt;, and &lt;em&gt;album&lt;/em&gt;.  Pretty
+self explanatory.  If you like to listen to one artist or album at a time, then
+that's all you need to know.  Just play what you want in view 1 or 2, make sure
+you are in &lt;em&gt;library&lt;/em&gt; Mode, and then set the minor mode to &lt;em&gt;artist&lt;/em&gt; or &lt;em&gt;album&lt;/em&gt;
+as you wish.&lt;/p&gt;
+&lt;p&gt;If you like to listen to a variety of tracks, most likely with shuffle, you
+will want the minor mode to be &lt;em&gt;all&lt;/em&gt;.  You still might not want to listen to
+literally all of your files.  Maybe you have podcasts and music in your library
+and you only want to listen to music.  This is what filters are for.  You don't
+want to do this with playlists because &lt;em&gt;library&lt;/em&gt; Mode can be more dynamic and
+you can take advantage of the library views (1 and 2) while in &lt;em&gt;library&lt;/em&gt; Mode.
+There are a few filters defined by default in the filters view (6).  You might
+add some filters to filter by music or podcast.  Maybe: &lt;code&gt;:fset
+music=filename="/path/to/music/*"&lt;/code&gt; and &lt;code&gt;:fset
+podcast=filename"/path/to/podcasts/*&lt;/code&gt;.  You are probably now tempted to hit
+&lt;em&gt;enter&lt;/em&gt; on the designated filter on filters view.  It doesn't do what you
+want.  How you really do it is you hit &lt;em&gt;space&amp;gt;&lt;/em&gt;.  &lt;code&gt;[*]&lt;/code&gt; indicates the filter
+will be applied, &lt;code&gt;[!]&lt;/code&gt; indicates the filtered tracks will be &lt;em&gt;removed&lt;/em&gt; from
+the library, and &lt;code&gt;[ ]&lt;/code&gt; indicates the filter will not be active.  Hit &lt;em&gt;space&lt;/em&gt;
+until you have the right setting and then hit &lt;em&gt;enter&lt;/em&gt;.  Or, for filters you
+may use often, set some bindings in your &lt;code&gt;rc&lt;/code&gt; file:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;bind -f common A factivate music
+bind -f common P factivate podcast
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This is how I think about &lt;code&gt;cmus&lt;/code&gt;.  The queue is pretty neat, too, but I find I
+rarely use it.&lt;/p&gt;</content><category term="tutorial"></category><category term="cmus"></category><category term="linux"></category></entry><entry><title>Fcron examples for every 30 minutes and once a week</title><link href="http://mdlerch.com/2014/11-fcron-examples-for-every-30-minutes-and-once-a-week.html" rel="alternate"></link><published>2014-11-10T00:00:00-07:00</published><updated>2014-11-10T00:00:00-07:00</updated><author><name>Michael Lerch</name></author><id>tag:mdlerch.com,2014-11-10:/2014/11-fcron-examples-for-every-30-minutes-and-once-a-week.html</id><summary type="html">&lt;p&gt;This is mostly a note for myself, but maybe other people will also find it
+useful.&lt;/p&gt;
+&lt;p&gt;There are two types of jobs I'm going to talk about here.  They are jobs to be
+run at regular &lt;strong&gt;intervals&lt;/strong&gt; and jobs to be run &lt;strong&gt;periodically&lt;/strong&gt;.  Regular
+intervals means every x unit of …&lt;/p&gt;</summary><content type="html">&lt;p&gt;This is mostly a note for myself, but maybe other people will also find it
+useful.&lt;/p&gt;
+&lt;p&gt;There are two types of jobs I'm going to talk about here.  They are jobs to be
+run at regular &lt;strong&gt;intervals&lt;/strong&gt; and jobs to be run &lt;strong&gt;periodically&lt;/strong&gt;.  Regular
+intervals means every x unit of time.  Maybe every 4 days.  Maybe every half
+hour.  Periodic means once a week or once a day.&lt;/p&gt;
+&lt;h3&gt;Intervals&lt;/h3&gt;
+&lt;p&gt;Let's say you download your email with the command &lt;code&gt;do_email&lt;/code&gt; and you want to
+do this every 30 minutes.  Fire up &lt;code&gt;fcrontab -e&lt;/code&gt; and put in this entry:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;@ &lt;span class="m"&gt;30&lt;/span&gt; do_email
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The @ sign says this is an interval based command and 30 is the time interval
+in minutes.  You can specify more precisely by using multipliers of m, w, d,
+h, and s for months, weeks, days, hours, and seconds, respectively.  For
+example&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;@ 2h05 do_email
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;will download your email every 2 hours and 5 minutes.&lt;/p&gt;
+&lt;h3&gt;Periodic&lt;/h3&gt;
+&lt;p&gt;Let's say that you want a command to be run in some regular interval.  Maybe
+you want to download podcasts once a week.  If you use the command
+&lt;code&gt;get_podcasts&lt;/code&gt; to download your podcasts you could use this entry:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;%weekly  * &lt;span class="m"&gt;9&lt;/span&gt;-17 get_podcasts
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This will run the command get_podcasts once a week at any minute and sometime
+between 9am and 5pm.  A "week" starts on Monday and goes to Sunday so fcron
+will try to do this Monday between 9 and 5.  If your computer is on, it will
+try again on Tuesday.&lt;/p&gt;
+&lt;p&gt;Lot's more good stuff at &lt;a href="http://fcron.free.fr/doc/en/fcrontab.5.html"&gt;http://fcron.free.fr/doc/en/fcrontab.5.html&lt;/a&gt;&lt;/p&gt;</content><category term="fcron"></category><category term="cron"></category></entry><entry><title>Offlineimap, Gmail, and Mutt tutorial</title><link href="http://mdlerch.com/2014/11-offlineimap-gmail-and-mutt-tutorial.html" rel="alternate"></link><published>2014-11-09T00:00:00-07:00</published><updated>2014-11-09T00:00:00-07:00</updated><author><name>Michael Lerch</name></author><id>tag:mdlerch.com,2014-11-09:/2014/11-offlineimap-gmail-and-mutt-tutorial.html</id><summary type="html">&lt;h3&gt;History&lt;/h3&gt;
+&lt;p&gt;A few years ago, I wrote a series of blog posts on offlineimap, mutt, and gmail
+(&lt;a href="http://www.miggysmith.wordpress.com/gmail1"&gt;Link Here&lt;/a&gt;).  Since then, I spent
+some time using the gmail web interface for email and then went back to mutt
+and used the built in imap.  However, I've realized that neither of …&lt;/p&gt;</summary><content type="html">&lt;h3&gt;History&lt;/h3&gt;
+&lt;p&gt;A few years ago, I wrote a series of blog posts on offlineimap, mutt, and gmail
+(&lt;a href="http://www.miggysmith.wordpress.com/gmail1"&gt;Link Here&lt;/a&gt;).  Since then, I spent
+some time using the gmail web interface for email and then went back to mutt
+and used the built in imap.  However, I've realized that neither of these are
+as good as using offlineimap and mutt together, which I am back to using.  It
+is totally worth the 20 minutes or so to get offlineimap and mutt set up.  This
+post will show my offlineimap and mutt configurations.  I will assume you've
+already installed offlineimap and mutt.&lt;/p&gt;
+&lt;h3&gt;Offlineimap&lt;/h3&gt;
+&lt;p&gt;First, lets get offlineimap set up.  My use case will be pretty simple.  I have
+a single Gmail account to which I want to connect and I only want to grab the
+INBOX folder.  From this simple scenario, it should be easy to extend to
+slightly more complicated scenarios.  Let's pretend that my Gmail user name is
+gmail_user and the password is gmail_password. Here's a simple configuration
+file (&lt;code&gt;/home/user/.offlineimaprc&lt;/code&gt;), which we will explain line by line.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[general]&lt;/span&gt;
+&lt;span class="na"&gt;accounts&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;gmail_user&lt;/span&gt;
+&lt;span class="na"&gt;ui&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;ttyui&lt;/span&gt;
+&lt;span class="na"&gt;socktimeout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;30&lt;/span&gt;
+
+&lt;span class="k"&gt;[Account gmail_user]&lt;/span&gt;
+&lt;span class="na"&gt;localrepository&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;local-gmail_user&lt;/span&gt;
+&lt;span class="na"&gt;remoterepository&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;remote-gmail_user&lt;/span&gt;
+
+&lt;span class="k"&gt;[Repository local-gmail_user]&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;Maildir&lt;/span&gt;
+&lt;span class="na"&gt;localfolders&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/home/user/mail/gmail_user&lt;/span&gt;
+
+&lt;span class="k"&gt;[Repository remote-gmail_user]&lt;/span&gt;
+&lt;span class="na"&gt;type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;Gmail&lt;/span&gt;
+&lt;span class="na"&gt;remoteuser&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;gmail_user@gmail.com&lt;/span&gt;
+&lt;span class="na"&gt;remotepass&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;gmail_password&lt;/span&gt;
+&lt;span class="na"&gt;sslcacertfile&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/etc/ssl/certs/ca-certificates.crt&lt;/span&gt;
+&lt;span class="na"&gt;folderfilter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;lambda folder: folder in [&amp;#39;INBOX&amp;#39;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;&lt;code&gt;[general]&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;In this section, we have to define the accounts, which is the internal to
+offlineimap name of accounts that offlineimap should be syncing.  As
+described, I only have one.  If you had more, comma separate them (&lt;code&gt;accounts =
+gmail_user1, gmail_user2&lt;/code&gt;).  I am naming it after my Gmail user name.  The
+next two lines are not necessary.  &lt;code&gt;ui&lt;/code&gt; sets how fancy the output is when you
+run &lt;code&gt;offlineimap&lt;/code&gt; in your terminal.  &lt;code&gt;socktimeout&lt;/code&gt; is the number of seconds
+after which &lt;code&gt;offlineimap&lt;/code&gt; should stop trying to connect if it cannot make a
+connection.&lt;/p&gt;
+&lt;h4&gt;&lt;code&gt;[Account gmail_user]&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;Next, we need to name the mail repositories for each account.  Again, I only
+have one account so I only need one &lt;code&gt;[Account ...]&lt;/code&gt; section.  All we need to do
+here is name the local repository (on the computer) and the remote repository
+(Gmail) that hold my mail.  I've just named them &lt;code&gt;local-&lt;/code&gt; and &lt;code&gt;remote-&lt;/code&gt;
+followed by my gmail user name.&lt;/p&gt;
+&lt;h4&gt;&lt;code&gt;[Repository local-gmail_user]&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;Now, I specify how my local respository is set up.  I need to tell it the type
+(&lt;code&gt;Maildir&lt;/code&gt;) is pretty standard and where it's located in my filesystem
+(&lt;code&gt;localfolders&lt;/code&gt;).  I'm pretty sure the specified folder must exist before you
+run offlineimap: &lt;code&gt;mkdir -p /home/user/mail/gmail_user&lt;/code&gt;.&lt;/p&gt;
+&lt;h4&gt;&lt;code&gt;[Repository remote-gmail_user]&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;Lastly, we specify the Gmail details.  This should be pretty obvious.
+&lt;code&gt;remotepass&lt;/code&gt; is your Gmail password.  &lt;code&gt;folderfilter&lt;/code&gt; is what folders to sync.
+As I said, I only want the INBOX.  If you also want, say your sent mail, you
+might use&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;folderfilter = lambda folder: folder in [&amp;#39;INBOX&amp;#39; &amp;#39;[Gmail]/Sent Mail&amp;#39;]
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;Download your mail&lt;/h4&gt;
+&lt;p&gt;At this point you should be able to download your mail.  Just run
+&lt;code&gt;offlineimap&lt;/code&gt; and it should start going.  If you have lots of mail, this will
+take a long time.  You can refresh with &lt;code&gt;offlineimap&lt;/code&gt; manually whenever you
+want.  You might like to set up a cron job to do this in regular intervals.&lt;/p&gt;
+&lt;h4&gt;Password tips&lt;/h4&gt;
+&lt;p&gt;I have two step verification on for my google account.  If you do, too, you
+might want to set up an "App password" for offlineimap.  To do this, log into
+gmail, click your user in the top right corner.  Click Account.  Click
+Security.  Click App passwords: Settings.  Then generate one for offlineimap.
+Paste the generated code (without spaces) as your &lt;code&gt;remotepass&lt;/code&gt; in offlineimap.&lt;/p&gt;
+&lt;p&gt;If you like to keep your dotfiles on github or some other publicly available
+place, you might not like having your password just written out.  Some people
+get fancy and integrate with keyrings and such.  I just keep my password stored
+in another file (which I don't index on github) and refer to that file in my
+main configuration file.  You can do that with offlineimap by utilizing its
+python evaluation.  I make a file called &lt;code&gt;/home/user/.offlineimap/password.py&lt;/code&gt;
+and in it just a single line&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;gmailpassword = &amp;quot;gmail_app_password&amp;quot;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now, go back to your &lt;code&gt;/home/user/.offlineimaprc&lt;/code&gt; and add this line to
+&lt;code&gt;[general]&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pythonfile = /home/user/.offlineimap/password.py
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And change the &lt;code&gt;remotepass&lt;/code&gt; line to&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;remotepasseval = gmailpassword
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The extra eval tells offlineimap to evaluate the value as a python expression.&lt;/p&gt;
+&lt;h3&gt;Mutt&lt;/h3&gt;
+&lt;p&gt;Now onto configuring mutt.  I'm just going to give the basics configuration.
+First, I like to keep my configuration at &lt;code&gt;/home/user/.mutt/muttrc&lt;/code&gt; I also have
+a &lt;code&gt;/home/user/.mutt/colors.muttrc&lt;/code&gt; and some other configuration files all in
+that &lt;code&gt;/home/user/.mutt/&lt;/code&gt; directory.&lt;/p&gt;
+&lt;p&gt;Here's a basic muttrc configuration with comments.  Note that I will be using
+mutt's built-in smtp for sending mail&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;## sending mail
+set realname = &amp;quot;Michael Lerch&amp;quot;
+set reverse_name = yes
+set from =  &amp;quot;gmail_user@gmail.com&amp;quot;
+set smtp_url = &amp;quot;smtp://gmail_user@smtp.gmail.com:587/&amp;quot;
+# file that contains the password
+source ~/.mutt/gmailpass.muttrc
+
+## appearance
+# this is the best sorting algorithm
+set sort = &amp;#39;threads&amp;#39;
+set sort_aux = &amp;#39;reverse-last-date-received&amp;#39;
+
+## receiving mail
+# needs to be consistent with offlineimap!
+set mbox_type = Maildir
+set folder = /home/user/mail/gmail_user
+# folder in which to start mutt
+set spoolfile = +/INBOX/
+# cache for even faster
+set header_cache = /home/user/mail/cache/
+
+## writing mail
+# I use vim
+set editor = &amp;quot;vim +:silent+/^$ &amp;quot;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Once again, I have my password stored in a separate file that I source.  That
+file contains a single line which is another App password for my google
+account:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;set smtp_pass = &amp;quot;password&amp;quot;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This should get you started with offlineimap and mutt.  Have you found any
+other tricks?&lt;/p&gt;</content><category term="email"></category></entry><entry><title>Tutorial for pandoc citations: markdown to latex</title><link href="http://mdlerch.com/2014/08-tutorial-for-pandoc-citations-markdown-to-latex.html" rel="alternate"></link><published>2014-08-31T00:00:00-06:00</published><updated>2014-08-31T00:00:00-06:00</updated><author><name>Michael Lerch</name></author><id>tag:mdlerch.com,2014-08-31:/2014/08-tutorial-for-pandoc-citations-markdown-to-latex.html</id><summary type="html">&lt;p&gt;I am trying to move &lt;em&gt;all&lt;/em&gt; of my writing over to markdown, and then using
+pandoc to produce the true target format.  Often that is latex, and often
+there are citations involved.  This post will be an example (or two) of
+dealing with citations in markdown so that pandoc can …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I am trying to move &lt;em&gt;all&lt;/em&gt; of my writing over to markdown, and then using
+pandoc to produce the true target format.  Often that is latex, and often
+there are citations involved.  This post will be an example (or two) of
+dealing with citations in markdown so that pandoc can handle things
+appropriately.&lt;/p&gt;
+&lt;p&gt;I use mendeley to organize my academic papers and it happily produces .bib
+files for different collections.  So, my assumption is that you already have
+your references specified in a .bib file.  You should also have pandoc and a
+latex installation.  You should also install &lt;code&gt;pandoc-citeproc&lt;/code&gt; which is
+separate from pandoc.  If you have pandoc through RStudio, it probably also
+came with pandoc-citeproc.  Otherwise, you should be able to install it the
+same way that you installed pandoc (perhaps &lt;code&gt;cabal install --global
+pandoc-citeproc&lt;/code&gt;).  As you'll see in this post, pandoc-citeproc is not
+strictly necessary.&lt;/p&gt;
+&lt;p&gt;I'll talk about two scenarios for generating latex output.  The first is you
+go straight from markdown to a pdf with no intermediate steps.  The pandoc
+latex default template (or your own latex pandoc template) is good enough.
+The second scenario will be that we want to generate a .tex file from our
+markdown and then possibly tweak the .tex file and finally compile it to pdf.&lt;/p&gt;
+&lt;p&gt;For the first scenario, we want to take &lt;code&gt;input.md&lt;/code&gt; convert it to &lt;code&gt;output.pdf&lt;/code&gt;
+while linking in &lt;code&gt;ref.bib&lt;/code&gt;.  Here's the pandoc call to do that&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pandoc input.md -t latex --filter pandoc-citeproc --bibliography&lt;span class="o"&gt;=&lt;/span&gt;ref.bib -o output.pdf
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The &lt;code&gt;--bibliography&lt;/code&gt; flag is not necessary, we could specify this in the YAML
+at the top of the markdown file:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;---
+title: My Title
+author: ME!
+bibliography: ref.bib
+---
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You might also add in some flags like &lt;code&gt;-S&lt;/code&gt; to make sure quotes and such are
+handled intelligently.  To cite a reference in &lt;code&gt;ref.bib&lt;/code&gt; that has a reference
+key of RefKey, just type &lt;code&gt;[@RefKey]&lt;/code&gt; in your markdown source.  If you don't
+want parentheses around the citation, drop the square brackets &lt;code&gt;@RefKey&lt;/code&gt;, if
+you don't want to say something like "Heinz and Huntz say blah (Heinz and
+Huntz, 1992)" and would rather get "Heinz and Huntz say blah (1992)" do this:
+&lt;code&gt;[-@RefKey]&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;If you have cls file, you can give pandoc the flag &lt;code&gt;--csl=FILE&lt;/code&gt;.  I don't know
+much about this, I'm used to .bst files for natbib.&lt;/p&gt;
+&lt;p&gt;You might be thinking that if you wanted to go .tex instead .pdf, you would
+just change the output to &lt;code&gt;-o output.tex&lt;/code&gt;.  However, this is probably not what
+you want.  The &lt;code&gt;pandoc-citeproc&lt;/code&gt; is going through and evaluating all of your
+citations, so you won't see, in your .tex file, things like
+"\citep{HeinzHuntz1992}".  Instead, the citation will be expanded to it's
+actual text.  To get the "raw" latex source, you should not use
+&lt;code&gt;pandoc-citeproc&lt;/code&gt;.  Instead, we'll let latex use natbib/bibtex to actually
+expand the citations.  To generate the .tex, run a line like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pandoc input.md -t latex -s -S --natbib --bibliography&lt;span class="o"&gt;=&lt;/span&gt;ref.bib -o output.tex
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I have found that I must specify the &lt;code&gt;--bibliography&lt;/code&gt; flag even if it is
+stated in the YAML of the markdown source.  Now, you can go into the .tex
+file, tweak things, set the bibliography style to your .bst, etc.  Citation is
+done the same way as above (using the &lt;code&gt;@&lt;/code&gt; sign) which is translated to the
+latex &lt;code&gt;\cite&lt;/code&gt; family as appropriate.&lt;/p&gt;
+&lt;p&gt;Do you have any additional tricks for dealing with pandoc, markdown, latex and
+citations?&lt;/p&gt;</content><category term="pandoc"></category><category term="bibtex"></category><category term="natbib"></category><category term="tutorial"></category><category term="example"></category></entry><entry><title>Increment or decrement visual selection in vim</title><link href="http://mdlerch.com/2014/08-increment-or-decrement-visual-selection-in-vim.html" rel="alternate"></link><published>2014-08-25T00:00:00-06:00</published><updated>2014-08-25T00:00:00-06:00</updated><author><name>Michael Lerch</name></author><id>tag:mdlerch.com,2014-08-25:/2014/08-increment-or-decrement-visual-selection-in-vim.html</id><summary type="html">&lt;p&gt;vim can increment and decrement digits under the cursor with the &lt;code&gt;&amp;lt;C-A&amp;gt;&lt;/code&gt;
+&lt;code&gt;&amp;lt;C-X&amp;gt;&lt;/code&gt; bindings, respectively.  Go try it out and then come back.&lt;/p&gt;
+&lt;p&gt;Now that you are back, let's extend this functionality to visual
+selections.  First let's learn a command you can find in &lt;code&gt;:help submatch&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;s&lt;span class="sr"&gt;/\d\+/&lt;/span&gt;\&lt;span class="p"&gt;=&lt;/span&gt;submatch&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0 …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;vim can increment and decrement digits under the cursor with the &lt;code&gt;&amp;lt;C-A&amp;gt;&lt;/code&gt;
+&lt;code&gt;&amp;lt;C-X&amp;gt;&lt;/code&gt; bindings, respectively.  Go try it out and then come back.&lt;/p&gt;
+&lt;p&gt;Now that you are back, let's extend this functionality to visual
+selections.  First let's learn a command you can find in &lt;code&gt;:help submatch&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;s&lt;span class="sr"&gt;/\d\+/&lt;/span&gt;\&lt;span class="p"&gt;=&lt;/span&gt;submatch&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)+&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This is a type of substitution called sub-replace-expression.  A normal
+substitution looks like &lt;code&gt;:s/{pattern}/{string}/&lt;/code&gt; and replaces &lt;code&gt;{pattern}&lt;/code&gt;
+with &lt;code&gt;{string}&lt;/code&gt;.  Here we have the &lt;code&gt;\=&lt;/code&gt; changes the &lt;code&gt;{string}&lt;/code&gt; part to an
+expression to be evaluated.  Our pattern in this case is &lt;code&gt;\d\+&lt;/code&gt;.  The &lt;code&gt;\d&lt;/code&gt;
+matches a digit and the &lt;code&gt;\+&lt;/code&gt; says to match one or more digit so something like
+&lt;code&gt;555&lt;/code&gt; is matched once and not 3 times.&lt;/p&gt;
+&lt;p&gt;So what our sub-replace-expression is going to do is find a number and then
+substitute it with the evaluation of &lt;code&gt;submatch(0)+1&lt;/code&gt;.  &lt;code&gt;submatch(0)&lt;/code&gt; simply
+returns the matched text (ie the &lt;code&gt;\d\+&lt;/code&gt;).  The &lt;code&gt;+1&lt;/code&gt; adds one to it!&lt;/p&gt;
+&lt;p&gt;Of course, this only operates on the first occurrence of &lt;code&gt;\d\+&lt;/code&gt; in the current
+line.  We can make this operate on every &lt;code&gt;\d\+&lt;/code&gt; on a line with the &lt;code&gt;g&lt;/code&gt; flag for
+&lt;code&gt;:s&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;s&lt;span class="sr"&gt;/\d\+/&lt;/span&gt;\&lt;span class="p"&gt;=&lt;/span&gt;submatch&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)+&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;/&lt;span class="k"&gt;g&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Go ahead and give that a try.&lt;/p&gt;
+&lt;p&gt;It feels like we are close now.  This won't work quite right, but at this
+point you might be tempted to add this mapping to your vimrc&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;vnoremap&lt;/span&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;C&lt;span class="p"&gt;-&lt;/span&gt;&lt;span class="k"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; :s&lt;span class="sr"&gt;/\d\+/&lt;/span&gt;\&lt;span class="p"&gt;=&lt;/span&gt;submatch&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)+&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;/&lt;span class="k"&gt;g&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;What we &lt;em&gt;want&lt;/em&gt; this to do is to increment all numbers in a visual selection.
+It does do that, but it does something else as well.  Can you figure out
+what's going wrong?&lt;/p&gt;
+&lt;p&gt;The problem is that the way substitute works on visual selections (ie
+&lt;code&gt;:'&amp;lt;,'&amp;gt;s&lt;/code&gt;) is to operate on the whole line that contains the visual selection
+so if you select only some of the numbers on a line, the numbers on the line
+that are not selected will also be incremented.  We can fix this by adding
+something to the &lt;code&gt;{pattern}&lt;/code&gt;.  We want to match not just digits but digits
+that are in the visual selection.  We can do that with &lt;code&gt;\%V&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;vnoremap&lt;/span&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;C&lt;span class="p"&gt;-&lt;/span&gt;&lt;span class="k"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; :s&lt;span class="sr"&gt;/\%V\d\+/&lt;/span&gt;\&lt;span class="p"&gt;=&lt;/span&gt;submatch&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)+&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;/&lt;span class="k"&gt;g&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now we are getting pretty close.  There's one problem here depending on the
+exact behavior that you want.  What about negative values?  Do you want -6 to
+increment to -5 or to increment to -7?  Personally, I want it to increment to
+-5.  If you do, too, we have to add even more to our &lt;code&gt;{pattern}&lt;/code&gt; to include
+negative signs along with our digit.  What we need to do is add, in front of
+the &lt;code&gt;\d\+&lt;/code&gt; either 0 or 1 &lt;code&gt;-&lt;/code&gt;'s.  To say 0 or 1, we use &lt;code&gt;\=&lt;/code&gt; in our pattern.  In
+the pattern, &lt;code&gt;\=&lt;/code&gt; means 0 or 1.  In the replacement string, &lt;code&gt;\=&lt;/code&gt; means
+evaluate an expression.&lt;/p&gt;
+&lt;p&gt;So here's our final mapping:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;vnoremap&lt;/span&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;C&lt;span class="p"&gt;-&lt;/span&gt;&lt;span class="k"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; :s&lt;span class="sr"&gt;/\%V-\=\d\+/&lt;/span&gt;\&lt;span class="p"&gt;=&lt;/span&gt;submatch&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)+&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;/&lt;span class="k"&gt;g&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To decrement, just subtract 1 instead of adding.  Have you added this mapping
+to your vimrc?  Have you made it better?&lt;/p&gt;</content><category term="vim"></category></entry></feed>

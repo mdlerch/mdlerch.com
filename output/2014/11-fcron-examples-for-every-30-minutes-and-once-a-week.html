@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="../theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="../theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="../theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+
+
+<meta name="author" content="Michael Lerch" />
+<meta name="description" content="This is mostly a note for myself, but maybe other people will also find it useful. There are two types of jobs I'm going to talk about here. They are jobs to be run at regular intervals and jobs to be run periodically. Regular intervals means every x unit of …" />
+<meta name="keywords" content="fcron, cron">
+<meta property="og:site_name" content="mdlerch"/>
+<meta property="og:title" content="Fcron examples for every 30 minutes and once a week"/>
+<meta property="og:description" content="This is mostly a note for myself, but maybe other people will also find it useful. There are two types of jobs I'm going to talk about here. They are jobs to be run at regular intervals and jobs to be run periodically. Regular intervals means every x unit of …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="../2014/11-fcron-examples-for-every-30-minutes-and-once-a-week.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2014-11-10 00:00:00-07:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="../author/michael-lerch.html">
+<meta property="article:section" content="misc"/>
+<meta property="article:tag" content="fcron"/>
+<meta property="article:tag" content="cron"/>
+<meta property="og:image" content="">
+
+  <title>mdlerch &ndash; Fcron examples for every 30 minutes and once a week</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="..">
+        <!-- <img src="../theme/img/profile.png" alt="" title=""> -->
+      </a>
+      <h1><a href=".."></a></h1>
+
+
+      <nav>
+        <ul class="list">
+          <li><a href="../pages/about.html#about">About</a></li>
+          <li><a href="../pages/projects.html#projects">Projects</a></li>
+          <li><a href="../categories.html">Categories</a></li>
+          <li><a href="../tags.html">Tags</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-github" href="https://www.github.com/mdlerch" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-twitter" href="http://www.twitter.com/mdlerch" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-linkedin" href="http://www.linkedin.com/in/mdlerch" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-google" href="http://plus.google.com/115559038551588800365?rel=author" target="_blank"><i class="fa fa-google"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+    <h1 id="fcron-examples-for-every-30-minutes-and-once-a-week">Fcron examples for every 30 minutes and once a week</h1>
+    <p>
+          Posted on 10 November 2014 in <a href="../category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>This is mostly a note for myself, but maybe other people will also find it
+useful.</p>
+<p>There are two types of jobs I'm going to talk about here.  They are jobs to be
+run at regular <strong>intervals</strong> and jobs to be run <strong>periodically</strong>.  Regular
+intervals means every x unit of time.  Maybe every 4 days.  Maybe every half
+hour.  Periodic means once a week or once a day.</p>
+<h3>Intervals</h3>
+<p>Let's say you download your email with the command <code>do_email</code> and you want to
+do this every 30 minutes.  Fire up <code>fcrontab -e</code> and put in this entry:</p>
+<div class="highlight"><pre><span></span>@ <span class="m">30</span> do_email
+</pre></div>
+
+
+<p>The @ sign says this is an interval based command and 30 is the time interval
+in minutes.  You can specify more precisely by using multipliers of m, w, d,
+h, and s for months, weeks, days, hours, and seconds, respectively.  For
+example</p>
+<div class="highlight"><pre><span></span>@ 2h05 do_email
+</pre></div>
+
+
+<p>will download your email every 2 hours and 5 minutes.</p>
+<h3>Periodic</h3>
+<p>Let's say that you want a command to be run in some regular interval.  Maybe
+you want to download podcasts once a week.  If you use the command
+<code>get_podcasts</code> to download your podcasts you could use this entry:</p>
+<div class="highlight"><pre><span></span>%weekly  * <span class="m">9</span>-17 get_podcasts
+</pre></div>
+
+
+<p>This will run the command get_podcasts once a week at any minute and sometime
+between 9am and 5pm.  A "week" starts on Monday and goes to Sunday so fcron
+will try to do this Monday between 9 and 5.  If your computer is on, it will
+try again on Tuesday.</p>
+<p>Lot's more good stuff at <a href="http://fcron.free.fr/doc/en/fcrontab.5.html">http://fcron.free.fr/doc/en/fcrontab.5.html</a></p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="../tag/fcron.html">fcron</a>
+      <a href="../tag/cron.html">cron</a>
+    </p>
+  </div>
+
+
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'mdlerch';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+        Please enable JavaScript to view comments.
+
+</noscript>
+</article>
+
+    <footer>
+<p>&copy; Michael Lerch </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54051300-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " mdlerch ",
+  "url" : "..",
+  "image": "",
+  "description": ""
+}
+</script>
+</body>
+</html>

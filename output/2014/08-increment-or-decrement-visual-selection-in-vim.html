@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="../theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="../theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="../theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+
+
+<meta name="author" content="Michael Lerch" />
+<meta name="description" content="vim can increment and decrement digits under the cursor with the <C-A> <C-X> bindings, respectively. Go try it out and then come back. Now that you are back, let's extend this functionality to visual selections. First let's learn a command you can find in :help submatch. :s/\d\+/\=submatch(0 …" />
+<meta name="keywords" content="vim">
+<meta property="og:site_name" content="mdlerch"/>
+<meta property="og:title" content="Increment or decrement visual selection in vim"/>
+<meta property="og:description" content="vim can increment and decrement digits under the cursor with the <C-A> <C-X> bindings, respectively. Go try it out and then come back. Now that you are back, let's extend this functionality to visual selections. First let's learn a command you can find in :help submatch. :s/\d\+/\=submatch(0 …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="../2014/08-increment-or-decrement-visual-selection-in-vim.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2014-08-25 00:00:00-06:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="../author/michael-lerch.html">
+<meta property="article:section" content="misc"/>
+<meta property="article:tag" content="vim"/>
+<meta property="og:image" content="">
+
+  <title>mdlerch &ndash; Increment or decrement visual selection in vim</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="..">
+        <!-- <img src="../theme/img/profile.png" alt="" title=""> -->
+      </a>
+      <h1><a href=".."></a></h1>
+
+
+      <nav>
+        <ul class="list">
+          <li><a href="../pages/about.html#about">About</a></li>
+          <li><a href="../pages/projects.html#projects">Projects</a></li>
+          <li><a href="../categories.html">Categories</a></li>
+          <li><a href="../tags.html">Tags</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-github" href="https://www.github.com/mdlerch" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-twitter" href="http://www.twitter.com/mdlerch" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-linkedin" href="http://www.linkedin.com/in/mdlerch" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-google" href="http://plus.google.com/115559038551588800365?rel=author" target="_blank"><i class="fa fa-google"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+    <h1 id="increment-or-decrement-visual-selection-in-vim">Increment or decrement visual selection in vim</h1>
+    <p>
+          Posted on 25 August 2014 in <a href="../category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>vim can increment and decrement digits under the cursor with the <code>&lt;C-A&gt;</code>
+<code>&lt;C-X&gt;</code> bindings, respectively.  Go try it out and then come back.</p>
+<p>Now that you are back, let's extend this functionality to visual
+selections.  First let's learn a command you can find in <code>:help submatch</code>.</p>
+<div class="highlight"><pre><span></span><span class="p">:</span>s<span class="sr">/\d\+/</span>\<span class="p">=</span>submatch<span class="p">(</span><span class="m">0</span><span class="p">)+</span><span class="m">1</span>/
+</pre></div>
+
+
+<p>This is a type of substitution called sub-replace-expression.  A normal
+substitution looks like <code>:s/{pattern}/{string}/</code> and replaces <code>{pattern}</code>
+with <code>{string}</code>.  Here we have the <code>\=</code> changes the <code>{string}</code> part to an
+expression to be evaluated.  Our pattern in this case is <code>\d\+</code>.  The <code>\d</code>
+matches a digit and the <code>\+</code> says to match one or more digit so something like
+<code>555</code> is matched once and not 3 times.</p>
+<p>So what our sub-replace-expression is going to do is find a number and then
+substitute it with the evaluation of <code>submatch(0)+1</code>.  <code>submatch(0)</code> simply
+returns the matched text (ie the <code>\d\+</code>).  The <code>+1</code> adds one to it!</p>
+<p>Of course, this only operates on the first occurrence of <code>\d\+</code> in the current
+line.  We can make this operate on every <code>\d\+</code> on a line with the <code>g</code> flag for
+<code>:s</code></p>
+<div class="highlight"><pre><span></span><span class="p">:</span>s<span class="sr">/\d\+/</span>\<span class="p">=</span>submatch<span class="p">(</span><span class="m">0</span><span class="p">)+</span><span class="m">1</span>/<span class="k">g</span>
+</pre></div>
+
+
+<p>Go ahead and give that a try.</p>
+<p>It feels like we are close now.  This won't work quite right, but at this
+point you might be tempted to add this mapping to your vimrc</p>
+<div class="highlight"><pre><span></span><span class="nb">vnoremap</span> <span class="p">&lt;</span>C<span class="p">-</span><span class="k">a</span><span class="p">&gt;</span> :s<span class="sr">/\d\+/</span>\<span class="p">=</span>submatch<span class="p">(</span><span class="m">0</span><span class="p">)+</span><span class="m">1</span>/<span class="k">g</span>
+</pre></div>
+
+
+<p>What we <em>want</em> this to do is to increment all numbers in a visual selection.
+It does do that, but it does something else as well.  Can you figure out
+what's going wrong?</p>
+<p>The problem is that the way substitute works on visual selections (ie
+<code>:'&lt;,'&gt;s</code>) is to operate on the whole line that contains the visual selection
+so if you select only some of the numbers on a line, the numbers on the line
+that are not selected will also be incremented.  We can fix this by adding
+something to the <code>{pattern}</code>.  We want to match not just digits but digits
+that are in the visual selection.  We can do that with <code>\%V</code></p>
+<div class="highlight"><pre><span></span><span class="nb">vnoremap</span> <span class="p">&lt;</span>C<span class="p">-</span><span class="k">a</span><span class="p">&gt;</span> :s<span class="sr">/\%V\d\+/</span>\<span class="p">=</span>submatch<span class="p">(</span><span class="m">0</span><span class="p">)+</span><span class="m">1</span>/<span class="k">g</span>
+</pre></div>
+
+
+<p>Now we are getting pretty close.  There's one problem here depending on the
+exact behavior that you want.  What about negative values?  Do you want -6 to
+increment to -5 or to increment to -7?  Personally, I want it to increment to
+-5.  If you do, too, we have to add even more to our <code>{pattern}</code> to include
+negative signs along with our digit.  What we need to do is add, in front of
+the <code>\d\+</code> either 0 or 1 <code>-</code>'s.  To say 0 or 1, we use <code>\=</code> in our pattern.  In
+the pattern, <code>\=</code> means 0 or 1.  In the replacement string, <code>\=</code> means
+evaluate an expression.</p>
+<p>So here's our final mapping:</p>
+<div class="highlight"><pre><span></span><span class="nb">vnoremap</span> <span class="p">&lt;</span>C<span class="p">-</span><span class="k">a</span><span class="p">&gt;</span> :s<span class="sr">/\%V-\=\d\+/</span>\<span class="p">=</span>submatch<span class="p">(</span><span class="m">0</span><span class="p">)+</span><span class="m">1</span>/<span class="k">g</span>
+</pre></div>
+
+
+<p>To decrement, just subtract 1 instead of adding.  Have you added this mapping
+to your vimrc?  Have you made it better?</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="../tag/vim.html">vim</a>
+    </p>
+  </div>
+
+
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'mdlerch';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+        Please enable JavaScript to view comments.
+
+</noscript>
+</article>
+
+    <footer>
+<p>&copy; Michael Lerch </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54051300-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " mdlerch ",
+  "url" : "..",
+  "image": "",
+  "description": ""
+}
+</script>
+</body>
+</html>
