@@ -7,13 +7,17 @@ SITENAME = 'mdlerch'
 SITEURL = 'http://mdlerch.com'
 
 DISPLAY_PAGES_ON_MENU = True
-USE_FOLDER_AS_CATEGORY = True
+DISPLAY_CATEGORIES_ON_MENU = True
+USE_FOLDER_AS_CATEGORY = False
 DEFAULT_PAGINATION = 8
 
 TIMEZONE = 'US/Mountain'
 DEFAULT_LANG = 'en'
 DEFAULT_DATE = 'fs'
 DEFAULT_DATE_FORMAT = "%d %B %Y"
+
+ARTICLE_SAVE_AS = '{date:%Y}/{date:%m}-{slug}.html'
+ARTICLE_URL = '{date:%Y}/{date:%m}-{slug}.html'
 
 # RELATIVE_URLS = False
 RELATIVE_URLS = True
@@ -27,7 +31,7 @@ TRANSLATION_FEED_ATOM = None
 
 IGNORE_FILES = ['draft*']
 
-THEME = "./elegant/"
+THEME = "./themes/Flex/"
 
 ELEGANT_SEARCH = False
 ELEGANT_PAGES_DATE = False
@@ -42,7 +46,7 @@ ELEGANT_PAGES_DATE = False
 SOCIAL = (('github', 'https://www.github.com/mdlerch'),
 		('twitter', 'http://www.twitter.com/mdlerch'),
 		('linkedin', 'http://www.linkedin.com/in/mdlerch'),
-                ('Google','http://plus.google.com/115559038551588800365?rel=author'))
+                ('google','http://plus.google.com/115559038551588800365?rel=author'))
 
 GPLUSID = "115559038551588800365"
 

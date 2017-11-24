@@ -70,6 +70,6 @@ done the same way as above (using the `@` sign) which is translated to the
 latex `\cite` family as appropriate.
 
 Do you have any additional tricks for dealing with pandoc, markdown, latex and
-citations
+citations?
 
 
