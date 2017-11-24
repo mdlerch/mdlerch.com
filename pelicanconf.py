@@ -16,8 +16,8 @@ DEFAULT_LANG = 'en'
 DEFAULT_DATE = 'fs'
 DEFAULT_DATE_FORMAT = "%d %B %Y"
 
-ARTICLE_SAVE_AS = '{date:%Y}/{date:%m}-{slug}.html'
-ARTICLE_URL = '{date:%Y}/{date:%m}-{slug}.html'
+ARTICLE_SAVE_AS = '{date:%Y}/{date:%y-%m}-{slug}.html'
+ARTICLE_URL = '{date:%Y}/{date:%y-%m}-{slug}.html'
 
 # RELATIVE_URLS = False
 RELATIVE_URLS = True

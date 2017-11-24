@@ -20,17 +20,23 @@
   <meta name="robots" content="" />
 
 
-    <meta name="author" content="Michael Lerch" />
-    <meta name="description" content="" />
+<meta name="author" content="Michael Lerch" />
+<meta name="description" content="There are a lot of blog posts out there that show how to combine mutt and goobook. However, all of them that I have seen are wrong. This isn't a long, post, I'm not going to tell you about goobook and mutt, I'm just going to tell you the problem …" />
+<meta name="keywords" content="mutt">
 <meta property="og:site_name" content="mdlerch"/>
-<meta property="og:type" content="blog"/>
-<meta property="og:title" content="mdlerch"/>
-<meta property="og:description" content=""/>
+<meta property="og:title" content="Fixing mutt and goobook"/>
+<meta property="og:description" content="There are a lot of blog posts out there that show how to combine mutt and goobook. However, all of them that I have seen are wrong. This isn't a long, post, I'm not going to tell you about goobook and mutt, I'm just going to tell you the problem …"/>
 <meta property="og:locale" content="en_US"/>
-<meta property="og:url" content=".."/>
+<meta property="og:url" content="../2015/15-01-fixing-mutt-and-goobook.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2015-01-27 00:00:00-07:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="../author/michael-lerch.html">
+<meta property="article:section" content="misc"/>
+<meta property="article:tag" content="mutt"/>
+<meta property="og:image" content="">
 
-  <title>mdlerch &ndash;     Tag mutt
-</title>
+  <title>mdlerch &ndash; Fixing mutt and goobook</title>
 
 </head>
 <body>
@@ -65,60 +71,67 @@
   <main>
 
 
-
-
-<article>
+<article class="single">
   <header>
-    <h2><a href="../2015/15-01-fixing-mutt-and-goobook.html#fixing-mutt-and-goobook">Fixing mutt and goobook</a></h2>
+    <h1 id="fixing-mutt-and-goobook">Fixing mutt and goobook</h1>
     <p>
           Posted on 27 January 2015 in <a href="../category/misc.html">misc</a>
 
 
-          &#8226;     Tagged with
-
-              <a href="../tag/mutt.html">mutt</a>
     </p>
   </header>
+
+
   <div>
-      <p>There are a lot of blog posts out there that show how to combine mutt and
+    <p>There are a lot of blog posts out there that show how to combine mutt and
 goobook.  However, all of them that I have seen are wrong.  This isn't a long,
 post, I'm not going to tell you <em>about</em> goobook and mutt, I'm just going to
-tell you the problem …</p>
-      <br>
-      <a class="btn" href="../2015/15-01-fixing-mutt-and-goobook.html#fixing-mutt-and-goobook">    Continue reading
-</a>
+tell you the problem and the <em>correct</em> usage.  I imagine this also goes for
+other query commands besides goobook.</p>
+<p>First the problem.  If you query a single word, things work fine.  If you
+query two words, say a first and last name, goobook breaks.  For example, if
+you type "joe smith" and then hit tab (or however you query) the display gets
+messed up and goobook says "unrecognized argument: smith".  So, you change
+your query to just "joe" and then you have to manually wade through all of
+the "joe"'s in you contact list.</p>
+<p>This is because you probably have this line in your mutt config:</p>
+<div class="highlight"><pre><span></span>set query_command=&quot;goobook query &#39;%s&#39;&quot;
+</pre></div>
+
+
+<p>Don't feel bad, that line is in lots of blog posts.</p>
+<p>This is what you should have:</p>
+<div class="highlight"><pre><span></span>set query_command=&quot;goobook query %s&quot;
+</pre></div>
+
+
+<p>That is, no quotes around the <code>%s</code>.  Mutt adds them automatically (see <code>man
+muttrc</code>).</p>
+<p>Finally, you can type a first <em>and</em> last name to query!</p>
   </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="../2014/14-12-emailing-mutt-and-vim-advanced-config.html#emailing-mutt-and-vim-advanced-config">Emailing (mutt) and vim advanced config</a></h2>
+  <div class="tag-cloud">
     <p>
-          Posted on 29 December 2014 in <a href="../category/misc.html">misc</a>
-
-
-          &#8226;     Tagged with
-
-              <a href="../tag/vim.html">vim</a>,              <a href="../tag/mutt.html">mutt</a>,              <a href="../tag/email.html">email</a>,              <a href="../tag/linux.html">linux</a>,              <a href="../tag/unix.html">unix</a>
+      <a href="../tag/mutt.html">mutt</a>
     </p>
-  </header>
-  <div>
-      <p>Here are some tips you might like for advanced emailing with vim.  I use mutt
-as my email client, but these tips should be mostly applicable to any other
-email client you might use.</p>
-<p>First, let's talk about format flowed text.  Perhaps you believe so strongly in
-72 character width …</p>
-      <br>
-      <a class="btn" href="../2014/14-12-emailing-mutt-and-vim-advanced-config.html#emailing-mutt-and-vim-advanced-config">    Continue reading
-</a>
   </div>
+
+
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'mdlerch';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+        Please enable JavaScript to view comments.
+
+</noscript>
 </article>
-
-  <div class="pagination">
-  </div>
-
-
-
 
     <footer>
 <p>&copy; Michael Lerch </p>

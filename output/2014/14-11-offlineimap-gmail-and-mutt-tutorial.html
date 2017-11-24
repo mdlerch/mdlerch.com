@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="../theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="../theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="../theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+
+
+<meta name="author" content="Michael Lerch" />
+<meta name="description" content="History A few years ago, I wrote a series of blog posts on offlineimap, mutt, and gmail (Link Here). Since then, I spent some time using the gmail web interface for email and then went back to mutt and used the built in imap. However, I've realized that neither of …" />
+<meta name="keywords" content="email">
+<meta property="og:site_name" content="mdlerch"/>
+<meta property="og:title" content="Offlineimap, Gmail, and Mutt tutorial"/>
+<meta property="og:description" content="History A few years ago, I wrote a series of blog posts on offlineimap, mutt, and gmail (Link Here). Since then, I spent some time using the gmail web interface for email and then went back to mutt and used the built in imap. However, I've realized that neither of …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="../2014/14-11-offlineimap-gmail-and-mutt-tutorial.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2014-11-09 00:00:00-07:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="../author/michael-lerch.html">
+<meta property="article:section" content="misc"/>
+<meta property="article:tag" content="email"/>
+<meta property="og:image" content="">
+
+  <title>mdlerch &ndash; Offlineimap, Gmail, and Mutt tutorial</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="..">
+        <!-- <img src="../theme/img/profile.png" alt="" title=""> -->
+      </a>
+      <h1><a href=".."></a></h1>
+
+
+      <nav>
+        <ul class="list">
+          <li><a href="../pages/about.html#about">About</a></li>
+          <li><a href="../pages/projects.html#projects">Projects</a></li>
+          <li><a href="../categories.html">Categories</a></li>
+          <li><a href="../tags.html">Tags</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-github" href="https://www.github.com/mdlerch" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-twitter" href="http://www.twitter.com/mdlerch" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-linkedin" href="http://www.linkedin.com/in/mdlerch" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-google" href="http://plus.google.com/115559038551588800365?rel=author" target="_blank"><i class="fa fa-google"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+    <h1 id="offlineimap-gmail-and-mutt-tutorial">Offlineimap, Gmail, and Mutt tutorial</h1>
+    <p>
+          Posted on 09 November 2014 in <a href="../category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <h3>History</h3>
+<p>A few years ago, I wrote a series of blog posts on offlineimap, mutt, and gmail
+(<a href="http://www.miggysmith.wordpress.com/gmail1">Link Here</a>).  Since then, I spent
+some time using the gmail web interface for email and then went back to mutt
+and used the built in imap.  However, I've realized that neither of these are
+as good as using offlineimap and mutt together, which I am back to using.  It
+is totally worth the 20 minutes or so to get offlineimap and mutt set up.  This
+post will show my offlineimap and mutt configurations.  I will assume you've
+already installed offlineimap and mutt.</p>
+<h3>Offlineimap</h3>
+<p>First, lets get offlineimap set up.  My use case will be pretty simple.  I have
+a single Gmail account to which I want to connect and I only want to grab the
+INBOX folder.  From this simple scenario, it should be easy to extend to
+slightly more complicated scenarios.  Let's pretend that my Gmail user name is
+gmail_user and the password is gmail_password. Here's a simple configuration
+file (<code>/home/user/.offlineimaprc</code>), which we will explain line by line.</p>
+<div class="highlight"><pre><span></span><span class="k">[general]</span>
+<span class="na">accounts</span> <span class="o">=</span> <span class="s">gmail_user</span>
+<span class="na">ui</span> <span class="o">=</span> <span class="s">ttyui</span>
+<span class="na">socktimeout</span> <span class="o">=</span> <span class="s">30</span>
+
+<span class="k">[Account gmail_user]</span>
+<span class="na">localrepository</span> <span class="o">=</span> <span class="s">local-gmail_user</span>
+<span class="na">remoterepository</span> <span class="o">=</span> <span class="s">remote-gmail_user</span>
+
+<span class="k">[Repository local-gmail_user]</span>
+<span class="na">type</span> <span class="o">=</span> <span class="s">Maildir</span>
+<span class="na">localfolders</span> <span class="o">=</span> <span class="s">/home/user/mail/gmail_user</span>
+
+<span class="k">[Repository remote-gmail_user]</span>
+<span class="na">type</span> <span class="o">=</span> <span class="s">Gmail</span>
+<span class="na">remoteuser</span> <span class="o">=</span> <span class="s">gmail_user@gmail.com</span>
+<span class="na">remotepass</span> <span class="o">=</span> <span class="s">gmail_password</span>
+<span class="na">sslcacertfile</span> <span class="o">=</span> <span class="s">/etc/ssl/certs/ca-certificates.crt</span>
+<span class="na">folderfilter</span> <span class="o">=</span> <span class="s">lambda folder: folder in [&#39;INBOX&#39;]</span>
+</pre></div>
+
+
+<h4><code>[general]</code></h4>
+<p>In this section, we have to define the accounts, which is the internal to
+offlineimap name of accounts that offlineimap should be syncing.  As
+described, I only have one.  If you had more, comma separate them (<code>accounts =
+gmail_user1, gmail_user2</code>).  I am naming it after my Gmail user name.  The
+next two lines are not necessary.  <code>ui</code> sets how fancy the output is when you
+run <code>offlineimap</code> in your terminal.  <code>socktimeout</code> is the number of seconds
+after which <code>offlineimap</code> should stop trying to connect if it cannot make a
+connection.</p>
+<h4><code>[Account gmail_user]</code></h4>
+<p>Next, we need to name the mail repositories for each account.  Again, I only
+have one account so I only need one <code>[Account ...]</code> section.  All we need to do
+here is name the local repository (on the computer) and the remote repository
+(Gmail) that hold my mail.  I've just named them <code>local-</code> and <code>remote-</code>
+followed by my gmail user name.</p>
+<h4><code>[Repository local-gmail_user]</code></h4>
+<p>Now, I specify how my local respository is set up.  I need to tell it the type
+(<code>Maildir</code>) is pretty standard and where it's located in my filesystem
+(<code>localfolders</code>).  I'm pretty sure the specified folder must exist before you
+run offlineimap: <code>mkdir -p /home/user/mail/gmail_user</code>.</p>
+<h4><code>[Repository remote-gmail_user]</code></h4>
+<p>Lastly, we specify the Gmail details.  This should be pretty obvious.
+<code>remotepass</code> is your Gmail password.  <code>folderfilter</code> is what folders to sync.
+As I said, I only want the INBOX.  If you also want, say your sent mail, you
+might use</p>
+<div class="highlight"><pre><span></span>folderfilter = lambda folder: folder in [&#39;INBOX&#39; &#39;[Gmail]/Sent Mail&#39;]
+</pre></div>
+
+
+<h4>Download your mail</h4>
+<p>At this point you should be able to download your mail.  Just run
+<code>offlineimap</code> and it should start going.  If you have lots of mail, this will
+take a long time.  You can refresh with <code>offlineimap</code> manually whenever you
+want.  You might like to set up a cron job to do this in regular intervals.</p>
+<h4>Password tips</h4>
+<p>I have two step verification on for my google account.  If you do, too, you
+might want to set up an "App password" for offlineimap.  To do this, log into
+gmail, click your user in the top right corner.  Click Account.  Click
+Security.  Click App passwords: Settings.  Then generate one for offlineimap.
+Paste the generated code (without spaces) as your <code>remotepass</code> in offlineimap.</p>
+<p>If you like to keep your dotfiles on github or some other publicly available
+place, you might not like having your password just written out.  Some people
+get fancy and integrate with keyrings and such.  I just keep my password stored
+in another file (which I don't index on github) and refer to that file in my
+main configuration file.  You can do that with offlineimap by utilizing its
+python evaluation.  I make a file called <code>/home/user/.offlineimap/password.py</code>
+and in it just a single line</p>
+<div class="highlight"><pre><span></span>gmailpassword = &quot;gmail_app_password&quot;
+</pre></div>
+
+
+<p>Now, go back to your <code>/home/user/.offlineimaprc</code> and add this line to
+<code>[general]</code></p>
+<div class="highlight"><pre><span></span>pythonfile = /home/user/.offlineimap/password.py
+</pre></div>
+
+
+<p>And change the <code>remotepass</code> line to</p>
+<div class="highlight"><pre><span></span>remotepasseval = gmailpassword
+</pre></div>
+
+
+<p>The extra eval tells offlineimap to evaluate the value as a python expression.</p>
+<h3>Mutt</h3>
+<p>Now onto configuring mutt.  I'm just going to give the basics configuration.
+First, I like to keep my configuration at <code>/home/user/.mutt/muttrc</code> I also have
+a <code>/home/user/.mutt/colors.muttrc</code> and some other configuration files all in
+that <code>/home/user/.mutt/</code> directory.</p>
+<p>Here's a basic muttrc configuration with comments.  Note that I will be using
+mutt's built-in smtp for sending mail</p>
+<div class="highlight"><pre><span></span>## sending mail
+set realname = &quot;Michael Lerch&quot;
+set reverse_name = yes
+set from =  &quot;gmail_user@gmail.com&quot;
+set smtp_url = &quot;smtp://gmail_user@smtp.gmail.com:587/&quot;
+# file that contains the password
+source ~/.mutt/gmailpass.muttrc
+
+## appearance
+# this is the best sorting algorithm
+set sort = &#39;threads&#39;
+set sort_aux = &#39;reverse-last-date-received&#39;
+
+## receiving mail
+# needs to be consistent with offlineimap!
+set mbox_type = Maildir
+set folder = /home/user/mail/gmail_user
+# folder in which to start mutt
+set spoolfile = +/INBOX/
+# cache for even faster
+set header_cache = /home/user/mail/cache/
+
+## writing mail
+# I use vim
+set editor = &quot;vim +:silent+/^$ &quot;
+</pre></div>
+
+
+<p>Once again, I have my password stored in a separate file that I source.  That
+file contains a single line which is another App password for my google
+account:</p>
+<div class="highlight"><pre><span></span>set smtp_pass = &quot;password&quot;
+</pre></div>
+
+
+<p>This should get you started with offlineimap and mutt.  Have you found any
+other tricks?</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="../tag/email.html">email</a>
+    </p>
+  </div>
+
+
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'mdlerch';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+        Please enable JavaScript to view comments.
+
+</noscript>
+</article>
+
+    <footer>
+<p>&copy; Michael Lerch </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54051300-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " mdlerch ",
+  "url" : "..",
+  "image": "",
+  "description": ""
+}
+</script>
+</body>
+</html>

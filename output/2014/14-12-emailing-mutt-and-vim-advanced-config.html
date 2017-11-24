@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="../theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="../theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="../theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+
+
+<meta name="author" content="Michael Lerch" />
+<meta name="description" content="Here are some tips you might like for advanced emailing with vim. I use mutt as my email client, but these tips should be mostly applicable to any other email client you might use. First, let's talk about format flowed text. Perhaps you believe so strongly in 72 character width …" />
+<meta name="keywords" content="vim, mutt, email, linux, unix">
+<meta property="og:site_name" content="mdlerch"/>
+<meta property="og:title" content="Emailing (mutt) and vim advanced config"/>
+<meta property="og:description" content="Here are some tips you might like for advanced emailing with vim. I use mutt as my email client, but these tips should be mostly applicable to any other email client you might use. First, let's talk about format flowed text. Perhaps you believe so strongly in 72 character width …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="../2014/14-12-emailing-mutt-and-vim-advanced-config.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2014-12-29 00:00:00-07:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="../author/michael-lerch.html">
+<meta property="article:section" content="misc"/>
+<meta property="article:tag" content="vim"/>
+<meta property="article:tag" content="mutt"/>
+<meta property="article:tag" content="email"/>
+<meta property="article:tag" content="linux"/>
+<meta property="article:tag" content="unix"/>
+<meta property="og:image" content="">
+
+  <title>mdlerch &ndash; Emailing (mutt) and vim advanced config</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="..">
+        <!-- <img src="../theme/img/profile.png" alt="" title=""> -->
+      </a>
+      <h1><a href=".."></a></h1>
+
+
+      <nav>
+        <ul class="list">
+          <li><a href="../pages/about.html#about">About</a></li>
+          <li><a href="../pages/projects.html#projects">Projects</a></li>
+          <li><a href="../categories.html">Categories</a></li>
+          <li><a href="../tags.html">Tags</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-github" href="https://www.github.com/mdlerch" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-twitter" href="http://www.twitter.com/mdlerch" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-linkedin" href="http://www.linkedin.com/in/mdlerch" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-google" href="http://plus.google.com/115559038551588800365?rel=author" target="_blank"><i class="fa fa-google"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+    <h1 id="emailing-mutt-and-vim-advanced-config">Emailing (mutt) and vim advanced config</h1>
+    <p>
+          Posted on 29 December 2014 in <a href="../category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>Here are some tips you might like for advanced emailing with vim.  I use mutt
+as my email client, but these tips should be mostly applicable to any other
+email client you might use.</p>
+<p>First, let's talk about format flowed text.  Perhaps you believe so strongly in
+72 character width emails that you tend to enforce this philosophy on everyone
+you email.  If you are a more reasonable person, you prefer 72 characters for
+writing and in some circumstances reading, but certainly not while reading on a
+phone, for example.  The solution to this is format flow text.</p>
+<p>Essentially, any line that ends in white space is continued on the next line
+and any line that ends not on white space terminates a paragraph.  Hence,
+email clients that respect format flow treat any newlines preceded by a space
+a soft return and any preceded by a non-space a hard return.</p>
+<p>To use this in mutt and vim, we first have to turn on format flow in mutt so
+that it puts a flag in the email header.</p>
+<div class="highlight"><pre><span></span># muttrc
+set text_flowed
+</pre></div>
+
+
+<p>Now, we need to make sure that vim is on board.  I now add the following to
+<code>.vim/ftplugin/mail.vim</code></p>
+<div class="highlight"><pre><span></span><span class="c">&quot; ftplugin/mail.vim</span>
+<span class="k">setl</span> <span class="nb">tw</span><span class="p">=</span><span class="m">72</span>
+<span class="k">setl</span> <span class="k">fo</span><span class="p">=</span><span class="nb">aw</span>
+</pre></div>
+
+
+<p>The first line sets the textwidth for the current buffer to be 72 characters.
+The second line turns on formatting options 'a' and 'w'.  The 'a' option is
+not necessary, but it is nice.  'w' denotes that paragraphs are terminated by
+lines that end in non-white space.  'a' automatically reformats a paragraph so
+if you edit the interior of paragraph, vim will automatically apply the 72
+character width across the whole paragraph.  For slightly more, see
+<code>:help fo-table</code>.</p>
+<p>Great, we now have format flow text working.  We can write emails and the
+reader no longer has to read jagged edge emails on their phone!  In fact, now
+that the emails are no longer so ugly, we might have email conversations with
+people!  But now we have a new annoyance.  In mutt (at least this is the case
+without setting <code>edit_headers</code>) what I observe is that on a reply, I am given
+a file to edit where the first line says "On Mon Dec, 29, Someone wrote:".
+That's pretty annoying.  I'd like there to be a blank line between my new email
+and that line.  Sure I can press "O" in vim and open a new line and then make
+sure I hit return twice, but if I'm going to do that every time, it should be
+automatic.</p>
+<p>So I set up an <code>autocmd</code> to insert two blank lines at the top of the email if
+the email already contains content.  First, let's write a function that does
+this and then call it in an autocmd.  Here's the function:</p>
+<div class="highlight"><pre><span></span><span class="c">&quot; add two blank lines if already content</span>
+<span class="k">function</span> IsReply<span class="p">()</span>
+    <span class="k">if</span> line<span class="p">(</span><span class="s1">&#39;$&#39;</span><span class="p">)</span> <span class="p">&gt;</span> <span class="m">1</span>
+        :<span class="m">1</span>
+        :<span class="k">put</span><span class="p">!</span> <span class="p">=</span>\<span class="s2">&quot;\n\n\&quot;</span>
+        :<span class="m">1</span>
+    <span class="k">endif</span>
+<span class="k">endfunction</span>
+</pre></div>
+
+
+<p>What this does is checks the line number of the last line, if it is greater
+than 1 (ie there already is content) it goes to the first line and pastes two
+returns and then returns to the first line.</p>
+<p>Now, we call that function in an autocmd and our ftplugin/mail.vim file now
+looks like this:</p>
+<div class="highlight"><pre><span></span><span class="c">&quot; ftplugin/mail.vim</span>
+<span class="k">function</span> IsReply<span class="p">()</span>
+    <span class="k">if</span> line<span class="p">(</span><span class="s1">&#39;$&#39;</span><span class="p">)</span> <span class="p">&gt;</span> <span class="m">1</span>
+        :<span class="m">1</span>
+        :<span class="k">put</span><span class="p">!</span> <span class="p">=</span>\<span class="s2">&quot;\n\n\&quot;</span>
+        :<span class="m">1</span>
+    <span class="k">endif</span>
+<span class="k">endfunction</span>
+
+augroup mail_filetype
+    autocmd<span class="p">!</span>
+    autocmd<span class="p">!</span> <span class="nb">VimEnter</span> <span class="sr">/tmp/</span>mutt* :<span class="k">call</span> IsReply<span class="p">()</span>
+augroup END
+
+<span class="k">setl</span> <span class="nb">tw</span><span class="p">=</span><span class="m">72</span>
+<span class="k">setl</span> <span class="k">fo</span><span class="p">=</span><span class="nb">aw</span>
+</pre></div>
+
+
+<p>This is pretty nice, but how should we handle the formatting of the quoted text
+from the reply?  Surely, we'd like to apply format flow to that as well.
+Indeed, we can using the external program <code>par</code> which is a text formatter and
+adding some spaces at the ends of lines.  If you have <code>par</code> installed, you can
+add to the <code>IsReply()</code> function:</p>
+<div class="highlight"><pre><span></span><span class="k">function</span> IsReply<span class="p">()</span>
+    <span class="k">if</span> line<span class="p">(</span><span class="s1">&#39;$&#39;</span><span class="p">)</span> <span class="p">&gt;</span> <span class="m">1</span>
+        :%<span class="p">!</span>par w72q
+        :%s<span class="sr">/^.\+\ze\n\(&gt;*$\)\@!/</span>\<span class="m">0</span> /<span class="k">e</span>
+        :%s<span class="sr">/^&gt;*\zs\s\+$/</span>/<span class="k">e</span>
+        :<span class="m">1</span>
+        :<span class="k">put</span><span class="p">!</span> <span class="p">=</span>\<span class="s2">&quot;\n\n\&quot;</span>
+        :<span class="m">1</span>
+    <span class="k">endif</span>
+<span class="k">endfunction</span>
+</pre></div>
+
+
+<p>These three new lines do the following.  First, they let <code>par</code> reformat the
+file (make sure you have <code>par</code> installed!).  The argument w72q sets the width
+to 72 and supports quotes, meaning it will not make a mess of the '&gt;'
+characters indicating quote level.</p>
+<p>The next line <code>:%s/^.\+\ze\n\(&gt;*$\)\@!/\0 /e</code> is a search and replace across
+the whole buffer.  It searches for any lines that contains one or more
+characters followed by a line that is not 0 characters or only '&gt;' characters.
+The actual matched bit is the original line.  The substitution is that same
+line with a space at the end.</p>
+<p>The next line <code>:%s/^&gt;*\zs\s\+$//e</code> is another search and replace across the
+whole buffer.  I suspect it is possible to combine these two search and
+replaces, but I haven't bothered to figure it out yet.  What this one does it
+looks for any lines that are the '&gt;' followed by whitespace.  Such lines are
+replaced by just the string of '&gt;'.</p>
+<p>Thus, blank lines are not swallowed up by flowed text!</p>
+<p>Ah, now writing email is so much nicer.  It's not totally perfect, but it's
+pretty good. Another thing we can do is start in insert mode.  Very rarely do I
+not want to immediately insert text when writing an email.  Let's add that to
+the augroup.  Also, before anything else, get rid of old signatures.</p>
+<div class="highlight"><pre><span></span><span class="c">&quot; ftplugin/mail.vim</span>
+<span class="k">function</span> IsReply<span class="p">()</span>
+    <span class="k">if</span> line<span class="p">(</span><span class="s1">&#39;$&#39;</span><span class="p">)</span> <span class="p">&gt;</span> <span class="m">1</span>
+        :<span class="k">g</span><span class="sr">/^&gt;\s\=--\s\=$/</span><span class="p">,</span>$ delete
+        :%<span class="p">!</span>par w72q
+        :%s<span class="sr">/^.\+\ze\n\(&gt;*$\)\@!/</span>\<span class="m">0</span> /<span class="k">e</span>
+        :%s<span class="sr">/^&gt;*\zs\s\+$/</span>/<span class="k">e</span>
+        :<span class="m">1</span>
+        :<span class="k">put</span><span class="p">!</span> <span class="p">=</span>\<span class="s2">&quot;\n\n\&quot;</span>
+        :<span class="m">1</span>
+    <span class="k">endif</span>
+<span class="k">endfunction</span>
+
+augroup mail_filetype
+    autocmd<span class="p">!</span>
+    autocmd <span class="nb">VimEnter</span> <span class="sr">/tmp/</span>mutt* :<span class="k">call</span> IsReply<span class="p">()</span>
+    autocmd <span class="nb">VimEnter</span> <span class="sr">/tmp/</span>mutt* :exe <span class="s1">&#39;startinsert&#39;</span>
+augroup END
+
+<span class="k">setl</span> <span class="nb">tw</span><span class="p">=</span><span class="m">72</span>
+<span class="k">setl</span> <span class="k">fo</span><span class="p">=</span><span class="nb">aw</span>
+</pre></div>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="../tag/vim.html">vim</a>
+      <a href="../tag/mutt.html">mutt</a>
+      <a href="../tag/email.html">email</a>
+      <a href="../tag/linux.html">linux</a>
+      <a href="../tag/unix.html">unix</a>
+    </p>
+  </div>
+
+
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'mdlerch';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+        Please enable JavaScript to view comments.
+
+</noscript>
+</article>
+
+    <footer>
+<p>&copy; Michael Lerch </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54051300-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " mdlerch ",
+  "url" : "..",
+  "image": "",
+  "description": ""
+}
+</script>
+</body>
+</html>

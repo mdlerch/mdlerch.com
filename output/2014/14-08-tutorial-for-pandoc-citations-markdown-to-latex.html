@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="../theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="../theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="../theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+
+
+<meta name="author" content="Michael Lerch" />
+<meta name="description" content="I am trying to move all of my writing over to markdown, and then using pandoc to produce the true target format. Often that is latex, and often there are citations involved. This post will be an example (or two) of dealing with citations in markdown so that pandoc can …" />
+<meta name="keywords" content="pandoc, bibtex, natbib, tutorial, example">
+<meta property="og:site_name" content="mdlerch"/>
+<meta property="og:title" content="Tutorial for pandoc citations: markdown to latex"/>
+<meta property="og:description" content="I am trying to move all of my writing over to markdown, and then using pandoc to produce the true target format. Often that is latex, and often there are citations involved. This post will be an example (or two) of dealing with citations in markdown so that pandoc can …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="../2014/14-08-tutorial-for-pandoc-citations-markdown-to-latex.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2014-08-31 00:00:00-06:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="../author/michael-lerch.html">
+<meta property="article:section" content="misc"/>
+<meta property="article:tag" content="pandoc"/>
+<meta property="article:tag" content="bibtex"/>
+<meta property="article:tag" content="natbib"/>
+<meta property="article:tag" content="tutorial"/>
+<meta property="article:tag" content="example"/>
+<meta property="og:image" content="">
+
+  <title>mdlerch &ndash; Tutorial for pandoc citations: markdown to latex</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="..">
+        <!-- <img src="../theme/img/profile.png" alt="" title=""> -->
+      </a>
+      <h1><a href=".."></a></h1>
+
+
+      <nav>
+        <ul class="list">
+          <li><a href="../pages/about.html#about">About</a></li>
+          <li><a href="../pages/projects.html#projects">Projects</a></li>
+          <li><a href="../categories.html">Categories</a></li>
+          <li><a href="../tags.html">Tags</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-github" href="https://www.github.com/mdlerch" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-twitter" href="http://www.twitter.com/mdlerch" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-linkedin" href="http://www.linkedin.com/in/mdlerch" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-google" href="http://plus.google.com/115559038551588800365?rel=author" target="_blank"><i class="fa fa-google"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+    <h1 id="tutorial-for-pandoc-citations-markdown-to-latex">Tutorial for pandoc citations: markdown to latex</h1>
+    <p>
+          Posted on 31 August 2014 in <a href="../category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>I am trying to move <em>all</em> of my writing over to markdown, and then using
+pandoc to produce the true target format.  Often that is latex, and often
+there are citations involved.  This post will be an example (or two) of
+dealing with citations in markdown so that pandoc can handle things
+appropriately.</p>
+<p>I use mendeley to organize my academic papers and it happily produces .bib
+files for different collections.  So, my assumption is that you already have
+your references specified in a .bib file.  You should also have pandoc and a
+latex installation.  You should also install <code>pandoc-citeproc</code> which is
+separate from pandoc.  If you have pandoc through RStudio, it probably also
+came with pandoc-citeproc.  Otherwise, you should be able to install it the
+same way that you installed pandoc (perhaps <code>cabal install --global
+pandoc-citeproc</code>).  As you'll see in this post, pandoc-citeproc is not
+strictly necessary.</p>
+<p>I'll talk about two scenarios for generating latex output.  The first is you
+go straight from markdown to a pdf with no intermediate steps.  The pandoc
+latex default template (or your own latex pandoc template) is good enough.
+The second scenario will be that we want to generate a .tex file from our
+markdown and then possibly tweak the .tex file and finally compile it to pdf.</p>
+<p>For the first scenario, we want to take <code>input.md</code> convert it to <code>output.pdf</code>
+while linking in <code>ref.bib</code>.  Here's the pandoc call to do that</p>
+<div class="highlight"><pre><span></span>pandoc input.md -t latex --filter pandoc-citeproc --bibliography<span class="o">=</span>ref.bib -o output.pdf
+</pre></div>
+
+
+<p>The <code>--bibliography</code> flag is not necessary, we could specify this in the YAML
+at the top of the markdown file:</p>
+<div class="highlight"><pre><span></span>---
+title: My Title
+author: ME!
+bibliography: ref.bib
+---
+</pre></div>
+
+
+<p>You might also add in some flags like <code>-S</code> to make sure quotes and such are
+handled intelligently.  To cite a reference in <code>ref.bib</code> that has a reference
+key of RefKey, just type <code>[@RefKey]</code> in your markdown source.  If you don't
+want parentheses around the citation, drop the square brackets <code>@RefKey</code>, if
+you don't want to say something like "Heinz and Huntz say blah (Heinz and
+Huntz, 1992)" and would rather get "Heinz and Huntz say blah (1992)" do this:
+<code>[-@RefKey]</code>.</p>
+<p>If you have cls file, you can give pandoc the flag <code>--csl=FILE</code>.  I don't know
+much about this, I'm used to .bst files for natbib.</p>
+<p>You might be thinking that if you wanted to go .tex instead .pdf, you would
+just change the output to <code>-o output.tex</code>.  However, this is probably not what
+you want.  The <code>pandoc-citeproc</code> is going through and evaluating all of your
+citations, so you won't see, in your .tex file, things like
+"\citep{HeinzHuntz1992}".  Instead, the citation will be expanded to it's
+actual text.  To get the "raw" latex source, you should not use
+<code>pandoc-citeproc</code>.  Instead, we'll let latex use natbib/bibtex to actually
+expand the citations.  To generate the .tex, run a line like this:</p>
+<div class="highlight"><pre><span></span>pandoc input.md -t latex -s -S --natbib --bibliography<span class="o">=</span>ref.bib -o output.tex
+</pre></div>
+
+
+<p>I have found that I must specify the <code>--bibliography</code> flag even if it is
+stated in the YAML of the markdown source.  Now, you can go into the .tex
+file, tweak things, set the bibliography style to your .bst, etc.  Citation is
+done the same way as above (using the <code>@</code> sign) which is translated to the
+latex <code>\cite</code> family as appropriate.</p>
+<p>Do you have any additional tricks for dealing with pandoc, markdown, latex and
+citations?</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="../tag/pandoc.html">pandoc</a>
+      <a href="../tag/bibtex.html">bibtex</a>
+      <a href="../tag/natbib.html">natbib</a>
+      <a href="../tag/tutorial.html">tutorial</a>
+      <a href="../tag/example.html">example</a>
+    </p>
+  </div>
+
+
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'mdlerch';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+        Please enable JavaScript to view comments.
+
+</noscript>
+</article>
+
+    <footer>
+<p>&copy; Michael Lerch </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54051300-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " mdlerch ",
+  "url" : "..",
+  "image": "",
+  "description": ""
+}
+</script>
+</body>
+</html>

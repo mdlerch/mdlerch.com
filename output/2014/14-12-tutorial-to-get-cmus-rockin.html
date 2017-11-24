@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="../theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="../theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="../theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+
+
+<meta name="author" content="Michael Lerch" />
+<meta name="description" content="cmus is a console based music player. It's rather feature filled which can mean that getting it set up "just right" might require some work. This post is to help you get cmus set up to rock! There are a few introductory tutorials out there, but they only scratch the …" />
+<meta name="keywords" content="tutorial, cmus, linux">
+<meta property="og:site_name" content="mdlerch"/>
+<meta property="og:title" content="Tutorial to get cmus rockin'"/>
+<meta property="og:description" content="cmus is a console based music player. It's rather feature filled which can mean that getting it set up "just right" might require some work. This post is to help you get cmus set up to rock! There are a few introductory tutorials out there, but they only scratch the …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="../2014/14-12-tutorial-to-get-cmus-rockin.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2014-12-07 00:00:00-07:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="../author/michael-lerch.html">
+<meta property="article:section" content="misc"/>
+<meta property="article:tag" content="tutorial"/>
+<meta property="article:tag" content="cmus"/>
+<meta property="article:tag" content="linux"/>
+<meta property="og:image" content="">
+
+  <title>mdlerch &ndash; Tutorial to get cmus rockin'</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="..">
+        <!-- <img src="../theme/img/profile.png" alt="" title=""> -->
+      </a>
+      <h1><a href=".."></a></h1>
+
+
+      <nav>
+        <ul class="list">
+          <li><a href="../pages/about.html#about">About</a></li>
+          <li><a href="../pages/projects.html#projects">Projects</a></li>
+          <li><a href="../categories.html">Categories</a></li>
+          <li><a href="../tags.html">Tags</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-github" href="https://www.github.com/mdlerch" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-twitter" href="http://www.twitter.com/mdlerch" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-linkedin" href="http://www.linkedin.com/in/mdlerch" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-google" href="http://plus.google.com/115559038551588800365?rel=author" target="_blank"><i class="fa fa-google"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+    <h1 id="tutorial-to-get-cmus-rockin">Tutorial to get cmus rockin'</h1>
+    <p>
+          Posted on 07 December 2014 in <a href="../category/misc.html">misc</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p><code>cmus</code> is a console based music player.  It's rather feature filled which can
+mean that getting it set up "just right" might require some work.  This post is
+to help you get <code>cmus</code> set up to rock!  There are a few introductory tutorials
+out there, but they only scratch the surface.  My goal is to skip over the very
+introductory stuff--you've probably already figured that stuff out--and tell
+you <em>my</em> opinions on how to interact with <code>cmus</code>.  I am assuming you've found
+the <code>:add</code> command, you already know how to play music, and are familiar with
+the different views (1-7).</p>
+<p>Lastly, if you aren't familiar with it, you can set default keybindings and
+commands to be run in a file like <code>~/.config/cmus/rc</code>:  take a look at the
+FILES part of <code>man cmus</code>.</p>
+<h3>Controlling the player</h3>
+<p>The three main operations you need for a music player are play/pause toggle,
+next track, previous track.  The keybindings for these are <code>c</code>, <code>b</code>, and <code>z</code>,
+respectively.  I can only guess that these are a pneumonic in some language
+that is not English.  Especially <code>b</code> meaning <em>next</em> is bizarre for me.
+However, you <em>should not</em> use these commands anyway.  For these operations, you
+<em>should not</em> have to browse back to your music player.  You should just hit a
+keybinding wherever you are and your window manager should take care of the
+rest.</p>
+<p>To do this with <code>cmus</code>, we use the <code>cmus-remote</code> which comes with <code>cmus</code>.  For
+play/pause toggle: <code>cmus-remote -u</code>.  For next track: <code>cmus-remote -n</code>.  For
+previous track: <code>cmus-remote -r</code>.  Note that the previous track command
+performs <em>correctly</em> without any hacking.  If you near the beginning of the
+track, go back to the previous; if you are past the beginning of the track, go
+back to the start of this track.</p>
+<p>Set up your window manager to recognize a keybinding for each of the
+<code>cmus-remote</code> commands and forget about <code>c</code>, <code>b</code>, and <code>z</code>.</p>
+<h3>The playback Modes</h3>
+<p>Now that we have the basics down, we need to understand the way <code>cmus</code> thinks
+about your music.  There are two sources, or playback Modes: the <em>library</em> and
+the <em>playlist</em>.  This might sound backwards, but this is how you should think
+of these sources: the <em>library</em> is a dynamic subset of all of your tracks; the
+<em>playlist</em> is a fixed list of tracks (or files) to be played.  You might like
+to think about <em>library</em> or <em>playlist</em> as the Major Mode.  The default
+keybinding in <code>cmus</code> to switch between these Modes is <code>M</code>.  I'll keep using the
+capital M in Mode in reference to the default keybinding.</p>
+<p>You can read about playlists in <code>man cmus</code>.  Here's a couple quick tips:
+if you already have playlists saved to files, you can add the contents of the
+playlist file with the <code>win-add-p</code>.  The default key for this is <code>y</code>.  I
+prefer <code>p</code> for playlist so I have</p>
+<div class="highlight"><pre><span></span>unbind -f p common
+unbind -f p library win-add-p
+unbind -f p browser win-add-p
+</pre></div>
+
+
+<p>in my <code>rc</code> file.  If you have a single folder where all the playlists live,
+you might want to add this to your <code>rc</code> file:</p>
+<div class="highlight"><pre><span></span>cd /path/to/playlists/
+</pre></div>
+
+
+<p>This way you have access to the playlists right away in the browser (5) view.</p>
+<p>Now, let's talk about <em>library</em> Mode.  Library Mode has 3 minor modes.  I'm
+using a lower case <em>m</em> here since the default keybinding to switch between the
+minor modes is <code>m</code>.  The minor modes are <em>all</em>, <em>artist</em>, and <em>album</em>.  Pretty
+self explanatory.  If you like to listen to one artist or album at a time, then
+that's all you need to know.  Just play what you want in view 1 or 2, make sure
+you are in <em>library</em> Mode, and then set the minor mode to <em>artist</em> or <em>album</em>
+as you wish.</p>
+<p>If you like to listen to a variety of tracks, most likely with shuffle, you
+will want the minor mode to be <em>all</em>.  You still might not want to listen to
+literally all of your files.  Maybe you have podcasts and music in your library
+and you only want to listen to music.  This is what filters are for.  You don't
+want to do this with playlists because <em>library</em> Mode can be more dynamic and
+you can take advantage of the library views (1 and 2) while in <em>library</em> Mode.
+There are a few filters defined by default in the filters view (6).  You might
+add some filters to filter by music or podcast.  Maybe: <code>:fset
+music=filename="/path/to/music/*"</code> and <code>:fset
+podcast=filename"/path/to/podcasts/*</code>.  You are probably now tempted to hit
+<em>enter</em> on the designated filter on filters view.  It doesn't do what you
+want.  How you really do it is you hit <em>space&gt;</em>.  <code>[*]</code> indicates the filter
+will be applied, <code>[!]</code> indicates the filtered tracks will be <em>removed</em> from
+the library, and <code>[ ]</code> indicates the filter will not be active.  Hit <em>space</em>
+until you have the right setting and then hit <em>enter</em>.  Or, for filters you
+may use often, set some bindings in your <code>rc</code> file:</p>
+<div class="highlight"><pre><span></span>bind -f common A factivate music
+bind -f common P factivate podcast
+</pre></div>
+
+
+<p>This is how I think about <code>cmus</code>.  The queue is pretty neat, too, but I find I
+rarely use it.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="../tag/tutorial.html">tutorial</a>
+      <a href="../tag/cmus.html">cmus</a>
+      <a href="../tag/linux.html">linux</a>
+    </p>
+  </div>
+
+
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'mdlerch';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+        Please enable JavaScript to view comments.
+
+</noscript>
+</article>
+
+    <footer>
+<p>&copy; Michael Lerch </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54051300-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " mdlerch ",
+  "url" : "..",
+  "image": "",
+  "description": ""
+}
+</script>
+</body>
+</html>
