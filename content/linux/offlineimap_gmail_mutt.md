@@ -1,4 +1,5 @@
 Title: Offlineimap, Gmail, and Mutt tutorial
+Category: linux
 Tags: email
 Date: 2014-11-09
 

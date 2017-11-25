@@ -1,4 +1,5 @@
 Title: Tutorial for pandoc citations: markdown to latex
+Category: pandoc
 Tags: pandoc, bibtex, natbib, tutorial, example
 Date: 2014-08-31
 

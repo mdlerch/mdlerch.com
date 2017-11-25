@@ -1,4 +1,5 @@
 Title: turn off cli alias
+Category: linux
 Tags: linux, alias, cli
 Date: 2015-07-18
 

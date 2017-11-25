@@ -1,4 +1,5 @@
 Title: UltiSnip snippets missing from completion menu with YouCompleteMe
+Category: vim
 Tags: vim
 Date: 2015-06-19
 

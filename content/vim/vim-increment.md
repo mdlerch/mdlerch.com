@@ -1,4 +1,5 @@
 Title: Increment or decrement visual selection in vim
+Category: vim
 Date: 2014-08-25
 Tags: vim
 

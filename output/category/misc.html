@@ -70,59 +70,9 @@
 
 <article>
   <header>
-    <h2><a href="../2015/15-11-multiple-accounts-github-ssh-keys.html#multiple-accounts-github-ssh-keys">Multiple accounts github ssh-keys</a></h2>
+    <h2><a href="../2014/14-08-increment-or-decrement-visual-selection-in-vim.html#increment-or-decrement-visual-selection-in-vim">Increment or decrement visual selection in vim</a></h2>
     <p>
-          Posted on 14 November 2015 in <a href="../category/misc.html">misc</a>
-
-
-          &#8226;     Tagged with
-
-              <a href="../tag/ssh.html">ssh</a>,              <a href="../tag/linux.html">linux</a>,              <a href="../tag/github.html">github</a>,              <a href="../tag/git.html">git</a>,              <a href="../tag/keys.html">keys</a>,              <a href="../tag/ssh-keys.html">ssh-keys</a>
-    </p>
-  </header>
-  <div>
-      <p>If you have multiple github accounts and you would like to push to repositories under each of the accounts on a single computer, then you will probably need to define multiple ssh keys.</p>
-<p>I will assume that you already have one ssh-key working.
-To get our second account going, the …</p>
-      <br>
-      <a class="btn" href="../2015/15-11-multiple-accounts-github-ssh-keys.html#multiple-accounts-github-ssh-keys">    Continue reading
-</a>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="../2015/15-07-turn-off-cli-alias.html#turn-off-cli-alias">turn off cli alias</a></h2>
-    <p>
-          Posted on 18 July 2015 in <a href="../category/misc.html">misc</a>
-
-
-          &#8226;     Tagged with
-
-              <a href="../tag/linux.html">linux</a>,              <a href="../tag/alias.html">alias</a>,              <a href="../tag/cli.html">cli</a>
-    </p>
-  </header>
-  <div>
-      <p>tl;dr: <code>\cmd</code></p>
-<p>There may be a situation where you have masked a command with a shell alias.
-For example, you may always run a command with certain flags so you might do
-something like</p>
-<div class="highlight"><pre><span></span>$ <span class="nb">alias</span> <span class="nv">ls</span><span class="o">=</span><span class="s1">&#39;ls --color&#39;</span>
-</pre></div>
-
-
-<p>If, for whatever reason, you'd like to run the default <code>ls …</code></p>
-      <br>
-      <a class="btn" href="../2015/15-07-turn-off-cli-alias.html#turn-off-cli-alias">    Continue reading
-</a>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="../2015/15-06-ultisnip-snippets-missing-from-completion-menu-with-youcompleteme.html#ultisnip-snippets-missing-from-completion-menu-with-youcompleteme">UltiSnip snippets missing from completion menu with YouCompleteMe</a></h2>
-    <p>
-          Posted on 19 June 2015 in <a href="../category/misc.html">misc</a>
+          Posted on 25 August 2014 in <a href="../category/misc.html">misc</a>
 
 
           &#8226;     Tagged with
@@ -131,137 +81,18 @@ something like</p>
     </p>
   </header>
   <div>
-      <p>I was having a problem in neovim where my UltiSnips snippets were working, I
-could expand them, however YouCompleteMe was not displaying their availability
-in the pop-up completion menu.  Actually, a couple of the snippets showed up,
-but not most of them.</p>
-<p>My problem was that UltiSnips was loading with …</p>
+      <p>vim can increment and decrement digits under the cursor with the <code>&lt;C-A&gt;</code>
+<code>&lt;C-X&gt;</code> bindings, respectively.  Go try it out and then come back.</p>
+<p>Now that you are back, let's extend this functionality to visual
+selections.  First let's learn a command you can find in <code>:help submatch</code>.</p>
+<div class="highlight"><pre><span></span><span class="p">:</span>s<span class="sr">/\d\+/</span>\<span class="p">=</span>submatch<span class="p">(</span><span class="m">0 …</span></pre></div>
       <br>
-      <a class="btn" href="../2015/15-06-ultisnip-snippets-missing-from-completion-menu-with-youcompleteme.html#ultisnip-snippets-missing-from-completion-menu-with-youcompleteme">    Continue reading
-</a>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="../2015/15-05-writing-tests-for-r-packages-without-testthat-and-runit.html#writing-tests-for-r-packages-without-testthat-and-runit">Writing tests for R packages without testthat and RUnit</a></h2>
-    <p>
-          Posted on 31 May 2015 in <a href="../category/misc.html">misc</a>
-
-
-          &#8226;     Tagged with
-
-              <a href="../tag/r.html">R</a>
-    </p>
-  </header>
-  <div>
-      <p>As a beginner R package author who wanted to include tests in his package, I turned to Google.
-If you do the same, you will find multiple tutorials for the <code>testthat</code> package and maybe even a few for the <code>RUnit</code> package.
-If you look very closely, you will notice there …</p>
-      <br>
-      <a class="btn" href="../2015/15-05-writing-tests-for-r-packages-without-testthat-and-runit.html#writing-tests-for-r-packages-without-testthat-and-runit">    Continue reading
-</a>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="../2015/15-02-neovim-as-git-diff-and-merge-tool.html#neovim-as-git-diff-and-merge-tool">neovim as git diff and merge tool</a></h2>
-    <p>
-          Posted on 08 February 2015 in <a href="../category/misc.html">misc</a>
-
-
-          &#8226;     Tagged with
-
-              <a href="../tag/vim.html">vim</a>,              <a href="../tag/neovim.html">neovim</a>,              <a href="../tag/git.html">git</a>
-    </p>
-  </header>
-  <div>
-      <p>You've made the switch.  You are now using neovim for all your text editing,
-and you've hardly even noticed that you aren't using regular old vim.  Except
-one thing.  Your git difftool and mergetool aren't quite right.  One of two
-things is happening.  Either you are using old vim (which …</p>
-      <br>
-      <a class="btn" href="../2015/15-02-neovim-as-git-diff-and-merge-tool.html#neovim-as-git-diff-and-merge-tool">    Continue reading
-</a>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="../2015/15-01-fixing-mutt-and-goobook.html#fixing-mutt-and-goobook">Fixing mutt and goobook</a></h2>
-    <p>
-          Posted on 27 January 2015 in <a href="../category/misc.html">misc</a>
-
-
-          &#8226;     Tagged with
-
-              <a href="../tag/mutt.html">mutt</a>
-    </p>
-  </header>
-  <div>
-      <p>There are a lot of blog posts out there that show how to combine mutt and
-goobook.  However, all of them that I have seen are wrong.  This isn't a long,
-post, I'm not going to tell you <em>about</em> goobook and mutt, I'm just going to
-tell you the problem …</p>
-      <br>
-      <a class="btn" href="../2015/15-01-fixing-mutt-and-goobook.html#fixing-mutt-and-goobook">    Continue reading
-</a>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="../2014/14-12-emailing-mutt-and-vim-advanced-config.html#emailing-mutt-and-vim-advanced-config">Emailing (mutt) and vim advanced config</a></h2>
-    <p>
-          Posted on 29 December 2014 in <a href="../category/misc.html">misc</a>
-
-
-          &#8226;     Tagged with
-
-              <a href="../tag/vim.html">vim</a>,              <a href="../tag/mutt.html">mutt</a>,              <a href="../tag/email.html">email</a>,              <a href="../tag/linux.html">linux</a>,              <a href="../tag/unix.html">unix</a>
-    </p>
-  </header>
-  <div>
-      <p>Here are some tips you might like for advanced emailing with vim.  I use mutt
-as my email client, but these tips should be mostly applicable to any other
-email client you might use.</p>
-<p>First, let's talk about format flowed text.  Perhaps you believe so strongly in
-72 character width …</p>
-      <br>
-      <a class="btn" href="../2014/14-12-emailing-mutt-and-vim-advanced-config.html#emailing-mutt-and-vim-advanced-config">    Continue reading
-</a>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="../2014/14-12-tutorial-to-get-cmus-rockin.html#tutorial-to-get-cmus-rockin">Tutorial to get cmus rockin'</a></h2>
-    <p>
-          Posted on 07 December 2014 in <a href="../category/misc.html">misc</a>
-
-
-          &#8226;     Tagged with
-
-              <a href="../tag/tutorial.html">tutorial</a>,              <a href="../tag/cmus.html">cmus</a>,              <a href="../tag/linux.html">linux</a>
-    </p>
-  </header>
-  <div>
-      <p><code>cmus</code> is a console based music player.  It's rather feature filled which can
-mean that getting it set up "just right" might require some work.  This post is
-to help you get <code>cmus</code> set up to rock!  There are a few introductory tutorials
-out there, but they only scratch the …</p>
-      <br>
-      <a class="btn" href="../2014/14-12-tutorial-to-get-cmus-rockin.html#tutorial-to-get-cmus-rockin">    Continue reading
+      <a class="btn" href="../2014/14-08-increment-or-decrement-visual-selection-in-vim.html#increment-or-decrement-visual-selection-in-vim">    Continue reading
 </a>
   </div>
 </article>
 
   <div class="pagination">
-    <a class="btn" href="../category/misc2.html">
-      <i class="fa fa-angle-left"></i>     Older Posts
-
-    </a>
   </div>
 
 

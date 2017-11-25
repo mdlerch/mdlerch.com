@@ -1,4 +1,5 @@
 Title: Fcron examples for every 30 minutes and once a week
+Category: computer
 Tags: fcron, cron
 Date: 2014-11-10
 

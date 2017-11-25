@@ -1,4 +1,5 @@
 Title: Setting up vim for Rcpp
+Category: vim
 Tags: vim, R, Rcpp
 Date: 2015-03-28
 Status: Draft

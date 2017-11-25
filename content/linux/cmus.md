@@ -1,4 +1,5 @@
 Title: Tutorial to get cmus rockin'
+Category: linux
 Tags: tutorial, cmus, linux
 Date: 2014-12-07
 

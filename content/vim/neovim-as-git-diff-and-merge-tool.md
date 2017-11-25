@@ -1,4 +1,5 @@
 Title: neovim as git diff and merge tool
+Category: vim
 Tags: vim, neovim, git
 Date: 2015-02-08
 

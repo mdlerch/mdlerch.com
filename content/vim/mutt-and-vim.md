@@ -1,4 +1,5 @@
 Title: Emailing (mutt) and vim advanced config
+Category: vim
 Tags: vim, mutt, email, linux, unix
 Date: 2014-12-29
 

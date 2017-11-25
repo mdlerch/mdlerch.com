@@ -1,4 +1,5 @@
 Title: Fixing mutt and goobook
+Category: linux
 Tags: mutt
 Date: 2015-01-27
 

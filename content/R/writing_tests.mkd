@@ -1,4 +1,5 @@
 Title: Writing tests for R packages without testthat and RUnit
+Category: R
 Tags: R
 Date: 2015-05-31
 
