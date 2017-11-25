@@ -22,5 +22,7 @@ Snow on the top was way better than I expected, and I was able to get in two
 laps.  Trail down through the trees was pretty slick and I opted for the road
 after the first trail section.  Snow was fast enough to make the road fun.
 
-[Some photos](https://photos.app.goo.gl/wCRJpeXc0V4WU9rs1).
+![top of goose]({filename}/images/2017-11-goose.jpg)
+
+[More photos](https://photos.app.goo.gl/wCRJpeXc0V4WU9rs1).
 

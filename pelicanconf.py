@@ -51,7 +51,7 @@ SOCIAL = (('github', 'https://www.github.com/mdlerch'),
 
 GPLUSID = "115559038551588800365"
 
-STATIC_PATHS = (['CNAME'])
+STATIC_PATHS = ['CNAME', 'images']
 
 TWITTER_USERNAME = "mdlerch"
 

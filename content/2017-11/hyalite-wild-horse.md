@@ -14,3 +14,5 @@ nice to get out.
 
 Soda had a great time and has been sleeping almost the whole time since we got
 home.  Nice to tire him out a little.
+
+![blackmore]({filename}/images/2017-11-soda-hyalite.jpg)

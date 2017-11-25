@@ -6,12 +6,17 @@ Tags: xc, ski, bracket creek
 Authors: Michael Lerch
 
 
+
 Me and the pup took a nice little xc ski up bracket creek.  Soda is almost five
 months old and this was his first ski trip and he had a blast.
+
+![soda]({filename}/images/2017-11-soda-bracket.jpg)
 
 We skied up to the main parking lot.  At that point, we tried a few of the
 split off trails, but none were traveled enough that Soda could stay on top of
 the snow.  He kept falling through so we turned around.
+
+![soda]({filename}/images/2017-11-soda-bracket2.jpg)
 
 While soda has excellent trail poop etiquette (pooping while up to his belly
 in snow in order to poop off trail) he doesn't have great downhill travel
